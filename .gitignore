@@ -1,4 +1,5 @@
 .idea/
+coverage/
 composer.phar
 vendor/
 
