@@ -10,6 +10,7 @@
   ],
   "require": {
     "php": ">=5.4.0",
+    "ext-fileinfo": "*",
     "league/flysystem": "~1.0",
     "cloudinary/cloudinary_php": "~1.1"
   },
