@@ -39,6 +39,11 @@ class ApiFacade extends BaseApi
 
     public function content($path)
     {
-        return fopen(cloudinary_url($path), 'r');
+        return fopen($this->url($path), 'r');
+    }
+
+    public function url($path, array $parameters = [])
+    {
+        return cloudinary_url($path, $parameters);
     }
 }
