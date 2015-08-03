@@ -150,7 +150,10 @@ class CloudinaryAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function deleteShouldReturnFalseOnFailure(CloudinaryAdapter $cloudinary, MockInterface $api)
     {
-        $api->shouldReceive('delete_resources')->with(['file'])->once()->andReturn(['deleted' => ['file' => 'not_found']]);
+        $api->shouldReceive('delete_resources')
+            ->with(['file'])
+            ->once()
+            ->andReturn(['deleted' => ['file' => 'not_found']]);
         $this->assertFalse($cloudinary->delete('file'));
     }
 
@@ -162,7 +165,9 @@ class CloudinaryAdapterTest extends \PHPUnit_Framework_TestCase
      */
     public function deleteShouldReturnTrueOnSuccess(CloudinaryAdapter $cloudinary, MockInterface $api)
     {
-        $api->shouldReceive('delete_resources')->with(['file'])->once()->andReturn(['deleted' => ['file' => 'deleted']]);
+        $api->shouldReceive('delete_resources')
+            ->with(['file'])
+            ->once()->andReturn(['deleted' => ['file' => 'deleted']]);
         $this->assertTrue($cloudinary->delete('file'));
     }
 
