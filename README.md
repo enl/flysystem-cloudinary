@@ -1,6 +1,7 @@
 # Enl\Flysystem\Cloudinary League\Flysystem\AwsS3v3
 [![Build Status](https://img.shields.io/travis/engineor/flysystem-cloudinary/master.svg?style=flat-square)](https://travis-ci.org/engineor/flysystem-cloudinary)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![Coverage Status](https://coveralls.io/repos/engineor/flysystem-cloudinary/badge.svg?branch=master&service=github&style=flat-square)](https://coveralls.io/github/engineor/flysystem-cloudinary?branch=master)
 
 This is a [Flysystem adapter](https://github.com/thephpleague/flysystem) for [Cloudinary API](http://cloudinary.com/documentation/php_integration).
 
@@ -13,14 +14,6 @@ composer require enl/flysystem-cloudinary dev-master
 # Bootstrap
 
 ``` php
-    $api = new Enl\Flysystem\Cloudinary\ApiFacade([
-        'cloud_name' => 'your-cloudname-here',
-         'api_key' => 'api-key',
-         'api_secret' => 'You-know-what-to-do',
-         'overwrite' => false, // set this to true if you want to overwrite existing files using $filesystem->write();
-    ]);
-    $adapter = new Enl\Flysystem\Cloudinary\CloudinaryAdapter($api);
-    $filesystem = new League\Flysystem\Filesystem($adapter);
 <?php
 use Enl\Flysystem\Cloudinary\ApiFacade as CloudinaryClient;
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
