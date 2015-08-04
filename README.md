@@ -1,4 +1,4 @@
-# Enl\Flysystem\Cloudinary League\Flysystem\AwsS3v3
+# Enl\Flysystem\Cloudinary
 [![Build Status](https://img.shields.io/travis/engineor/flysystem-cloudinary/master.svg?style=flat-square)](https://travis-ci.org/engineor/flysystem-cloudinary)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Coverage Status](https://coveralls.io/repos/engineor/flysystem-cloudinary/badge.svg?branch=master&service=github&style=flat-square)](https://coveralls.io/github/engineor/flysystem-cloudinary?branch=master)
