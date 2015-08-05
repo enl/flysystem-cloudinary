@@ -1,7 +1,7 @@
 # Enl\Flysystem\Cloudinary
-[![Build Status](https://img.shields.io/travis/engineor/flysystem-cloudinary/master.svg?style=flat-square)](https://travis-ci.org/engineor/flysystem-cloudinary)
+[![Build Status](https://img.shields.io/travis/enl/flysystem-cloudinary/master.svg?style=flat-square)](https://travis-ci.org/enl/flysystem-cloudinary)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Coverage Status](https://coveralls.io/repos/engineor/flysystem-cloudinary/badge.svg?branch=master&service=github&style=flat-square)](https://coveralls.io/github/engineor/flysystem-cloudinary?branch=master)
+[![Coverage Status](https://coveralls.io/repos/enl/flysystem-cloudinary/badge.svg?branch=master&service=github&style=flat-square)](https://coveralls.io/github/enl/flysystem-cloudinary?branch=master)
 
 This is a [Flysystem adapter](https://github.com/thephpleague/flysystem) for [Cloudinary API](http://cloudinary.com/documentation/php_integration).
 
