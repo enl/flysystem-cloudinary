@@ -15,6 +15,7 @@
     "cloudinary/cloudinary_php": "~1.1"
   },
   "require-dev": {
+    "squizlabs/php_codesniffer": "^2.3.1",
     "phpunit/phpunit": "~4.0",
     "mockery/mockery": "0.9.*"
   },

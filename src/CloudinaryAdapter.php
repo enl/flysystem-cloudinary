@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Enl\Flysystem\Cloudinary;
-
 
 use Cloudinary\Api;
 use League\Flysystem\Adapter\Polyfill\NotSupportingVisibilityTrait;
@@ -17,9 +15,9 @@ class CloudinaryAdapter implements AdapterInterface
     /** @var ApiFacade */
     private $api;
 
-    use NotSupportingVisibilityTrait, // We have no visibility for paths, due all of them are public
-        StreamedTrait, // We have no streaming in Cloudinary API, so we need this polyfill
-        StreamedCopyTrait;
+    use NotSupportingVisibilityTrait; // We have no visibility for paths, due all of them are public
+    use StreamedTrait; // We have no streaming in Cloudinary API, so we need this polyfill
+    use StreamedCopyTrait;
 
     public function __construct(ApiFacade $api)
     {
@@ -38,8 +36,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         try {
             return $this->normalizeMetadata($this->api->upload($path, $contents));
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -69,8 +66,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         try {
             return (bool) $this->api->rename($path, $newpath);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -110,7 +106,9 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function createDir($dirname, Config $config)
     {
-        throw new NotSupportedException('Cloudinary API does not support direct folders creation. Create a file in this folder instead.');
+        throw new NotSupportedException(
+            'Cloudinary API does not support direct folders creation. Create a file in this folder instead.'
+        );
     }
 
     /**
@@ -150,15 +148,16 @@ class CloudinaryAdapter implements AdapterInterface
                 'stream' => $this->api->content($path),
                 'path' => $path
             ];
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
 
     /**
      * List contents of a directory.
-     * Unfortunately, Cloudinary does not support non recursive directory scan. That's because they actually treat filename prefixes as folders.
+     *
+     * Unfortunately, Cloudinary does not support non recursive directory scan
+     * because they treat filename prefixes as folders.
      *
      * @param string $directory
      * @param bool   $recursive
@@ -168,8 +167,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         try {
             return $this->doListContents($directory);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return [];
         }
 
@@ -207,8 +205,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         try {
             return $this->normalizeMetadata($this->api->resource($path));
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -255,6 +252,4 @@ class CloudinaryAdapter implements AdapterInterface
             'timestamp' => array_key_exists('created_at', $resource) ? strtotime($resource['created_at']) : false
         ];
     }
-
-
 }

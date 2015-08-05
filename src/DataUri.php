@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Enl\Flysystem\Cloudinary;
-
 
 /**
  * Class DataUri
@@ -46,6 +44,10 @@ class DataUri
      */
     public function __toString()
     {
-        return sprintf('data:%s;base64,%s', $this->getFileInfo()->buffer($this->content), base64_encode($this->content));
+        return sprintf(
+            'data:%s;base64,%s',
+            $this->getFileInfo()->buffer($this->content),
+            base64_encode($this->content)
+        );
     }
 }
