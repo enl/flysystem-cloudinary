@@ -29,13 +29,15 @@ class CloudinaryAdapter implements AdapterInterface
      * @param string $path
      * @param string $contents
      * @param Config $config Config object
+     *
      * @return array|false false on failure file meta data on success
      */
     public function write($path, $contents, Config $config)
     {
         try {
             return $this->normalizeMetadata($this->api->upload($path, $contents));
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return false;
         }
     }
@@ -46,6 +48,7 @@ class CloudinaryAdapter implements AdapterInterface
      * @param string $path
      * @param string $contents
      * @param Config $config Config object
+     *
      * @return array|false false on failure file meta data on success
      */
     public function update($path, $contents, Config $config)
@@ -59,13 +62,15 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @param string $path
      * @param string $newpath
+     *
      * @return bool
      */
     public function rename($path, $newpath)
     {
         try {
             return (bool) $this->api->rename($path, $newpath);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return false;
         }
     }
@@ -74,6 +79,7 @@ class CloudinaryAdapter implements AdapterInterface
      * Delete a file.
      *
      * @param string $path
+     *
      * @return bool
      */
     public function delete($path)
@@ -92,12 +98,13 @@ class CloudinaryAdapter implements AdapterInterface
      * Delete a directory.
      *
      * @param string $dirname
+     *
      * @return bool
      */
     public function deleteDir($dirname)
     {
         try {
-            $response = $this->api->delete_resources_by_prefix(rtrim($dirname, '/').'/');
+            $response = $this->api->delete_resources_by_prefix(rtrim($dirname, '/') . '/');
 
             return is_array($response['deleted']);
         }
@@ -108,18 +115,19 @@ class CloudinaryAdapter implements AdapterInterface
 
     /**
      * Create a directory.
-     * Cloudinary creates folders implicitly when you upload file with name 'path/file' and it has no API for folders creation.
-     * So that we need to just say "everything is ok, go on!"
+     * Cloudinary creates folders implicitly when you upload file with name 'path/file' and it has no API for folders
+     * creation. So that we need to just say "everything is ok, go on!"
      *
      * @param string $dirname directory name
      * @param Config $config
+     *
      * @return array|false
      */
     public function createDir($dirname, Config $config)
     {
         return [
-            'path' => rtrim($dirname, '/').'/',
-            'type' => 'dir'
+            'path' => rtrim($dirname, '/') . '/',
+            'type' => 'dir',
         ];
     }
 
@@ -127,6 +135,7 @@ class CloudinaryAdapter implements AdapterInterface
      * Check whether a file exists.
      *
      * @param string $path
+     *
      * @return array|bool|null
      */
     public function has($path)
@@ -138,6 +147,7 @@ class CloudinaryAdapter implements AdapterInterface
      * Read a file.
      *
      * @param string $path
+     *
      * @return array|false
      */
     public function read($path)
@@ -151,6 +161,7 @@ class CloudinaryAdapter implements AdapterInterface
 
     /**
      * @param $path
+     *
      * @return array|bool
      */
     public function readStream($path)
@@ -158,28 +169,30 @@ class CloudinaryAdapter implements AdapterInterface
         try {
             return [
                 'stream' => $this->api->content($path),
-                'path' => $path
+                'path'   => $path,
             ];
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return false;
         }
     }
 
     /**
      * List contents of a directory.
-     *
      * Unfortunately, Cloudinary does not support non recursive directory scan
      * because they treat filename prefixes as folders.
      *
      * @param string $directory
      * @param bool   $recursive
+     *
      * @return array
      */
     public function listContents($directory = '', $recursive = false)
     {
         try {
             return $this->doListContents($directory);
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return [];
         }
 
@@ -211,13 +224,15 @@ class CloudinaryAdapter implements AdapterInterface
      * Get all the meta data of a file or directory.
      *
      * @param string $path
+     *
      * @return array|false
      */
     public function getMetadata($path)
     {
         try {
             return $this->normalizeMetadata($this->api->resource($path));
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             return false;
         }
     }
@@ -226,6 +241,7 @@ class CloudinaryAdapter implements AdapterInterface
      * Get all the meta data of a file or directory.
      *
      * @param string $path
+     *
      * @return array|false
      */
     public function getSize($path)
@@ -237,6 +253,7 @@ class CloudinaryAdapter implements AdapterInterface
      * Get the mimetype of a file.
      *
      * @param string $path
+     *
      * @return array|false
      */
     public function getMimetype($path)
@@ -248,6 +265,7 @@ class CloudinaryAdapter implements AdapterInterface
      * Get the timestamp of a file.
      *
      * @param string $path
+     *
      * @return array|false
      */
     public function getTimestamp($path)
@@ -261,7 +279,7 @@ class CloudinaryAdapter implements AdapterInterface
             'type'      => 'file',
             'path'      => $resource['public_id'],
             'size'      => array_key_exists('bytes', $resource) ? $resource['bytes'] : false,
-            'timestamp' => array_key_exists('created_at', $resource) ? strtotime($resource['created_at']) : false
+            'timestamp' => array_key_exists('created_at', $resource) ? strtotime($resource['created_at']) : false,
         ];
     }
 }
