@@ -8,7 +8,6 @@ use League\Flysystem\Adapter\Polyfill\StreamedCopyTrait;
 use League\Flysystem\Adapter\Polyfill\StreamedTrait;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
-use League\Flysystem\NotSupportedException;
 
 class CloudinaryAdapter implements AdapterInterface
 {
@@ -79,9 +78,14 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function delete($path)
     {
-        $response = $this->api->delete_resources([$path]);
+        try {
+            $response = $this->api->delete_resources([$path]);
 
-        return $response['deleted'][$path] === 'deleted';
+            return $response['deleted'][$path] === 'deleted';
+        }
+        catch (Api\Error $e) {
+            return false;
+        }
     }
 
     /**
@@ -89,26 +93,34 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @param string $dirname
      * @return bool
-     * @throws NotSupportedException
      */
     public function deleteDir($dirname)
     {
-        throw new NotSupportedException('Cloudinary API does not support folders management.');
+        try {
+            $response = $this->api->delete_resources_by_prefix(rtrim($dirname, '/').'/');
+
+            return is_array($response['deleted']);
+        }
+        catch (Api\Error $e) {
+            return false;
+        }
     }
 
     /**
      * Create a directory.
+     * Cloudinary creates folders implicitly when you upload file with name 'path/file' and it has no API for folders creation.
+     * So that we need to just say "everything is ok, go on!"
      *
      * @param string $dirname directory name
      * @param Config $config
      * @return array|false
-     * @throws NotSupportedException
      */
     public function createDir($dirname, Config $config)
     {
-        throw new NotSupportedException(
-            'Cloudinary API does not support direct folders creation. Create a file in this folder instead.'
-        );
+        return [
+            'path' => rtrim($dirname, '/').'/',
+            'type' => 'dir'
+        ];
     }
 
     /**

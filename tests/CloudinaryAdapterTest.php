@@ -163,6 +163,21 @@ class CloudinaryAdapterTest extends \PHPUnit_Framework_TestCase
      * @test
      * @dataProvider adapterProvider
      */
+    public function deleteShouldReturnFalseOnException(CloudinaryAdapter $cloudinary, MockInterface $api)
+    {
+        $api->shouldReceive('delete_resources')
+            ->with(['file'])
+            ->once()
+            ->andThrow('\Cloudinary\Api\Error');
+        $this->assertFalse($cloudinary->delete('file'));
+    }
+
+    /**
+     * @param CloudinaryAdapter $cloudinary
+     * @param MockInterface     $api
+     * @test
+     * @dataProvider adapterProvider
+     */
     public function deleteShouldReturnTrueOnSuccess(CloudinaryAdapter $cloudinary, MockInterface $api)
     {
         $api->shouldReceive('delete_resources')
@@ -218,6 +233,7 @@ class CloudinaryAdapterTest extends \PHPUnit_Framework_TestCase
         $api->shouldReceive('content')->with('file')->once()->andReturn(tmpfile());
 
         $response = $cloudinary->readStream('file');
+        $this->assertInternalType('array', $response);
         $this->assertEquals('file', $response['path']);
         $this->assertInternalType('resource', $response['stream']);
     }
@@ -371,25 +387,50 @@ class CloudinaryAdapterTest extends \PHPUnit_Framework_TestCase
         $adapter->getVisibility('path');
     }
 
-    /**
-     * @test
-     * @expectedException \League\Flysystem\NotSupportedException
-     */
-    public function createDirShouldNotBeSupported()
+
+    public function createDirProvider()
     {
-        list($adapter) = $this->adapterProvider()[0];
-        /** @var CloudinaryAdapter $adapter */
-        $adapter->createDir('path', new Config());
+        return [
+            ['path', ['path' => 'path/', 'type' => 'dir']],
+            ['path/', ['path' => 'path/', 'type' => 'dir']],
+        ];
     }
 
     /**
      * @test
-     * @expectedException \League\Flysystem\NotSupportedException
+     * @dataProvider createDirProvider
      */
-    public function deleteDirShouldNotBeSupported()
+    public function createDirShouldAlwaysReturnSuccess($path, $expected)
     {
-        list($adapter) = $this->adapterProvider()[0];
         /** @var CloudinaryAdapter $adapter */
-        $adapter->deleteDir('path');
+        list($adapter) = $this->adapterProvider()[0];
+
+        $this->assertEquals($expected, $adapter->createDir($path, new Config()));
+    }
+
+    /**
+     * @test
+     * @dataProvider adapterProvider
+     */
+    public function deleteDirShouldReturnTrueIfSuccess(CloudinaryAdapter $adapter, MockInterface $api)
+    {
+        $api->shouldReceive('delete_resources_by_prefix')->with('path/')->andReturn(['deleted' => []]);
+
+        $this->assertTrue($adapter->deleteDir('path'));
+        $this->assertTrue($adapter->deleteDir('path/'));
+    }
+
+    /**
+     * @param CloudinaryAdapter $adapter
+     * @param MockInterface     $api
+     *
+     * @test
+     * @dataProvider adapterProvider
+     */
+    public function deleteDirShouldReturnFalseOnFailure(CloudinaryAdapter $adapter, MockInterface $api)
+    {
+        $api->shouldReceive('delete_resources_by_prefix')->andThrow('\Cloudinary\Api\Error');
+
+        $this->assertFalse($adapter->deleteDir('path/'));
     }
 }
