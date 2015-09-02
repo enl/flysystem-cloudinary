@@ -36,8 +36,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         try {
             return $this->normalizeMetadata($this->api->upload($path, $contents));
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -69,8 +68,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         try {
             return (bool) $this->api->rename($path, $newpath);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -88,8 +86,7 @@ class CloudinaryAdapter implements AdapterInterface
             $response = $this->api->delete_resources([$path]);
 
             return $response['deleted'][$path] === 'deleted';
-        }
-        catch (Api\Error $e) {
+        } catch (Api\Error $e) {
             return false;
         }
     }
@@ -107,8 +104,7 @@ class CloudinaryAdapter implements AdapterInterface
             $response = $this->api->delete_resources_by_prefix(rtrim($dirname, '/') . '/');
 
             return is_array($response['deleted']);
-        }
-        catch (Api\Error $e) {
+        } catch (Api\Error $e) {
             return false;
         }
     }
@@ -171,8 +167,7 @@ class CloudinaryAdapter implements AdapterInterface
                 'stream' => $this->api->content($path),
                 'path'   => $path,
             ];
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
@@ -191,8 +186,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         try {
             return $this->doListContents($directory);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return [];
         }
 
@@ -231,8 +225,7 @@ class CloudinaryAdapter implements AdapterInterface
     {
         try {
             return $this->normalizeMetadata($this->api->resource($path));
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }
