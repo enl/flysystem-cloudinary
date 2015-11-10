@@ -13,4 +13,3 @@ function fopen($path, $attributes)
 {
     return ApiFacadeTest::$fopen_result;
 }
-

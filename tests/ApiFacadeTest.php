@@ -6,7 +6,6 @@ use Enl\Flysystem\Cloudinary\ApiFacade;
 use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-
 /**
  * Class ApiFacadeTest
  * Almost all the tests here a very simple just because
@@ -61,4 +60,3 @@ class ApiFacadeTest extends MockeryTestCase
         $this->assertEquals('preset', \Cloudinary::config_get('upload_preset'));
     }
 }
-
