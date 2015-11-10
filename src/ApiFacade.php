@@ -10,10 +10,20 @@ use Cloudinary\Uploader;
  * Class ApiFacade
  *
  * @package Enl\Flysystem\Cloudinary
- * @codeCoverageIgnore Nothing to test here. This is simplest possible wrapper
  */
 class ApiFacade extends BaseApi
 {
+    /**
+     * @param array $options
+
+     */
+    public function __construct(array $options = [])
+    {
+        if (count($options)) {
+            $this->configure($options);
+        }
+    }
+
     /**
      * @param array $options
      * The most important options are:
@@ -22,28 +32,59 @@ class ApiFacade extends BaseApi
      * * string $api_secret You api secret
      * * boolean $overwrite Weather to overwrite existing file by rename or copy?
      */
-    public function __construct(array $options)
+    public function configure(array $options = [])
     {
         \Cloudinary::config($options);
     }
 
+    /**
+     * @param string $preset
+     */
+    public function setUploadPreset($preset)
+    {
+        $this->configure(['upload_preset' => $preset]);
+    }
+
+    /**
+     * @param string $path
+     * @param string $contents
+     * @return array
+     */
     public function upload($path, $contents)
     {
         return Uploader::upload(new DataUri($contents), ['public_id' => $path]);
     }
 
+    /**
+     * @param string $path
+     * @param string $newpath
+     * @return array
+     */
     public function rename($path, $newpath)
     {
         return Uploader::rename($path, $newpath);
     }
 
+    /**
+     * Returns content of file with given path
+     *
+     * @param string $path
+     * @return resource
+     */
     public function content($path)
     {
         return fopen($this->url($path), 'r');
     }
 
-    public function url($path, array $parameters = [])
+    /**
+     * Returns URL of file with given $path and $transformations
+     *
+     * @param string $path
+     * @param array $transformations
+     * @return string
+     */
+    public function url($path, array $transformations = [])
     {
-        return cloudinary_url($path, $parameters);
+        return cloudinary_url($path, $transformations);
     }
 }

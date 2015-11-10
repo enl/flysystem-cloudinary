@@ -5,17 +5,17 @@ namespace Enl\Flysystem\Cloudinary\Test;
 
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 use League\Flysystem\Config;
+
 use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 use Mockery\MockInterface;
 
-class CloudinaryAdapterTest extends \PHPUnit_Framework_TestCase
+/**
+ * Class CloudinaryAdapterTest
+ * @package Enl\Flysystem\Cloudinary\Test
+ */
+class CloudinaryAdapterTest extends MockeryTestCase
 {
-    protected function tearDown()
-    {
-        m::close();
-    }
-
-
     private function getApiMock()
     {
         return m::mock('Enl\Flysystem\Cloudinary\ApiFacade');
