@@ -67,7 +67,7 @@ class CloudinaryAdapter implements AdapterInterface
     public function rename($path, $newpath)
     {
         try {
-            return (bool) $this->api->rename($path, $newpath);
+            return (bool)$this->api->rename($path, $newpath);
         } catch (\Exception $e) {
             return false;
         }
@@ -165,7 +165,7 @@ class CloudinaryAdapter implements AdapterInterface
         try {
             return [
                 'stream' => $this->api->content($path),
-                'path'   => $path,
+                'path' => $path,
             ];
         } catch (\Exception $e) {
             return false;
@@ -178,7 +178,7 @@ class CloudinaryAdapter implements AdapterInterface
      * because they treat filename prefixes as folders.
      *
      * @param string $directory
-     * @param bool   $recursive
+     * @param bool $recursive
      *
      * @return array
      */
@@ -269,9 +269,9 @@ class CloudinaryAdapter implements AdapterInterface
     private function normalizeMetadata($resource)
     {
         return !is_array($resource) ? false : [
-            'type'      => 'file',
-            'path'      => $resource['public_id'],
-            'size'      => array_key_exists('bytes', $resource) ? $resource['bytes'] : false,
+            'type' => 'file',
+            'path' => $resource['public_id'],
+            'size' => array_key_exists('bytes', $resource) ? $resource['bytes'] : false,
             'timestamp' => array_key_exists('created_at', $resource) ? strtotime($resource['created_at']) : false,
         ];
     }

@@ -34,7 +34,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
      * @test
      * @dataProvider adapterProvider
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      */
     public function writeShouldReturnFalseOnFailure(CloudinaryAdapter $cloudinary, MockInterface $api)
     {
@@ -44,7 +44,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -64,7 +64,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
      * @test
      * @dataProvider adapterProvider
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      */
     public function updateShouldReturnFalseOnFailure(CloudinaryAdapter $cloudinary, MockInterface $api)
     {
@@ -74,7 +74,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -92,7 +92,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -104,7 +104,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -120,7 +120,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -132,7 +132,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -144,7 +144,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -159,7 +159,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -174,7 +174,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -188,7 +188,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -200,7 +200,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -212,7 +212,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -224,7 +224,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -240,7 +240,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -252,7 +252,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -281,7 +281,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $cloudinary
-     * @param MockInterface     $api
+     * @param MockInterface $api
      * @test
      * @dataProvider adapterProvider
      */
@@ -293,10 +293,11 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
         $api->shouldReceive('resources')->andReturn(['resources' => [compact('public_id', 'bytes', 'created_at')]]);
 
-        $expected = ['type'      => 'file',
-                     'path'      => $public_id,
-                     'size'      => $bytes,
-                     'timestamp' => strtotime($created_at)
+        $expected = [
+            'type' => 'file',
+            'path' => $public_id,
+            'size' => $bytes,
+            'timestamp' => strtotime($created_at)
         ];
 
         $actual = $cloudinary->listContents()[0];
@@ -337,10 +338,11 @@ class CloudinaryAdapterTest extends MockeryTestCase
         $actual = $cloudinary->{$method}('one', 'two');
 
 
-        $expected = ['type'      => 'file',
-                     'path'      => $public_id,
-                     'size'      => $bytes,
-                     'timestamp' => strtotime($created_at)
+        $expected = [
+            'type' => 'file',
+            'path' => $public_id,
+            'size' => $bytes,
+            'timestamp' => strtotime($created_at)
         ];
 
         $this->assertInternalType('array', $actual);
@@ -422,7 +424,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
 
     /**
      * @param CloudinaryAdapter $adapter
-     * @param MockInterface     $api
+     * @param MockInterface $api
      *
      * @test
      * @dataProvider adapterProvider
