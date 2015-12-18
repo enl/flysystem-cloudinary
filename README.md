@@ -9,7 +9,17 @@ This is a [Flysystem adapter](https://github.com/thephpleague/flysystem) for [Cl
 # Installation
 
 ```bash
-composer require enl/flysystem-cloudinary dev-master
+composer require enl/flysystem-cloudinary '~1.0'
+```
+
+Or just add the following string to `require` part of your `composer.json`:
+
+```json
+{
+    "require": {
+        "enl/flysystem-cloudinary": "~1.0"
+    }
+}
 ```
 
 # Bootstrap
