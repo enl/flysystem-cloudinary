@@ -1,5 +1,4 @@
 # Enl\Flysystem\Cloudinary
-![status](https://img.shields.io/badge/stability-unstable-red.svg?style=flat-square)
 [![Build Status](https://img.shields.io/travis/enl/flysystem-cloudinary/master.svg?style=flat-square)](https://travis-ci.org/enl/flysystem-cloudinary)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 [![Coverage Status](https://coveralls.io/repos/enl/flysystem-cloudinary/badge.svg?branch=master&service=github&style=flat-square)](https://coveralls.io/github/enl/flysystem-cloudinary?branch=master)
