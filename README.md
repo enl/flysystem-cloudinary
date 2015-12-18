@@ -39,9 +39,3 @@ Please, keep in mind three possible pain-in-asses of Cloudinary:
 * It adds automatically file extension to its public_id. In terms of Flysystem, cloudinary's public_id is considered as filename. But if you set public_id as 'test.jpg' Cloudinary will save the file as 'test.jpg.jpg'
 * It does not support folders creation through the API
 * If you want to save your files using folder you should set public_ids like 'test/test.jpg' and allow automated folders creation in your account settings in Cloudinary dashboard.
-
-# Disclaimer
-
-Actually, this library is very UNSTABLE. I haven't yet integrated it in project I've developed it for.
-
-By the way, there is a bunch of tests which gives me hope:)

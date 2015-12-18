@@ -28,7 +28,7 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @param string $path
      * @param string $contents
-     * @param Config $config Config object
+     * @param Config $config   Config object
      *
      * @return array|false false on failure file meta data on success
      */
@@ -46,7 +46,7 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @param string $path
      * @param string $contents
-     * @param Config $config Config object
+     * @param Config $config   Config object
      *
      * @return array|false false on failure file meta data on success
      */
@@ -67,7 +67,7 @@ class CloudinaryAdapter implements AdapterInterface
     public function rename($path, $newpath)
     {
         try {
-            return (bool)$this->api->rename($path, $newpath);
+            return (bool) $this->api->rename($path, $newpath);
         } catch (\Exception $e) {
             return false;
         }
@@ -101,7 +101,7 @@ class CloudinaryAdapter implements AdapterInterface
     public function deleteDir($dirname)
     {
         try {
-            $response = $this->api->delete_resources_by_prefix(rtrim($dirname, '/') . '/');
+            $response = $this->api->delete_resources_by_prefix(rtrim($dirname, '/').'/');
 
             return is_array($response['deleted']);
         } catch (Api\Error $e) {
@@ -112,7 +112,7 @@ class CloudinaryAdapter implements AdapterInterface
     /**
      * Create a directory.
      * Cloudinary creates folders implicitly when you upload file with name 'path/file' and it has no API for folders
-     * creation. So that we need to just say "everything is ok, go on!"
+     * creation. So that we need to just say "everything is ok, go on!".
      *
      * @param string $dirname directory name
      * @param Config $config
@@ -122,7 +122,7 @@ class CloudinaryAdapter implements AdapterInterface
     public function createDir($dirname, Config $config)
     {
         return [
-            'path' => rtrim($dirname, '/') . '/',
+            'path' => rtrim($dirname, '/').'/',
             'type' => 'dir',
         ];
     }
@@ -178,7 +178,7 @@ class CloudinaryAdapter implements AdapterInterface
      * because they treat filename prefixes as folders.
      *
      * @param string $directory
-     * @param bool $recursive
+     * @param bool   $recursive
      *
      * @return array
      */
@@ -189,7 +189,6 @@ class CloudinaryAdapter implements AdapterInterface
         } catch (\Exception $e) {
             return [];
         }
-
     }
 
     private function doListContents($directory = '', array $storage = [])

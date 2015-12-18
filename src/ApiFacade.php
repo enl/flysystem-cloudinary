@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Enl\Flysystem\Cloudinary;
 
 use Cloudinary\Api as BaseApi;
 use Cloudinary\Uploader;
 
 /**
- * Class ApiFacade
- *
- * @package Enl\Flysystem\Cloudinary
+ * Class ApiFacade.
  */
 class ApiFacade extends BaseApi
 {
@@ -25,11 +22,11 @@ class ApiFacade extends BaseApi
 
     /**
      * @param array $options
-     * The most important options are:
-     * * string $cloud_name Your cloud name
-     * * string $api_key Your api key
-     * * string $api_secret You api secret
-     * * boolean $overwrite Weather to overwrite existing file by rename or copy?
+     *                       The most important options are:
+     *                       * string $cloud_name Your cloud name
+     *                       * string $api_key Your api key
+     *                       * string $api_secret You api secret
+     *                       * boolean $overwrite Weather to overwrite existing file by rename or copy?
      */
     public function configure(array $options = [])
     {
@@ -47,6 +44,7 @@ class ApiFacade extends BaseApi
     /**
      * @param string $path
      * @param string $contents
+     *
      * @return array
      */
     public function upload($path, $contents)
@@ -57,6 +55,7 @@ class ApiFacade extends BaseApi
     /**
      * @param string $path
      * @param string $newpath
+     *
      * @return array
      */
     public function rename($path, $newpath)
@@ -65,9 +64,10 @@ class ApiFacade extends BaseApi
     }
 
     /**
-     * Returns content of file with given path
+     * Returns content of file with given path.
      *
      * @param string $path
+     *
      * @return resource
      */
     public function content($path)
@@ -76,10 +76,11 @@ class ApiFacade extends BaseApi
     }
 
     /**
-     * Returns URL of file with given $path and $transformations
+     * Returns URL of file with given $path and $transformations.
      *
      * @param string $path
-     * @param array $transformations
+     * @param array  $transformations
+     *
      * @return string
      */
     public function url($path, array $transformations = [])

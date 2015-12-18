@@ -4,9 +4,8 @@ namespace Enl\Flysystem\Cloudinary;
 
 /**
  * Class DataUri
- * Creates DATA-URI formatted string from file content
+ * Creates DATA-URI formatted string from file content.
  *
- * @package Enl\Flysystem\Cloudinary
  * @author Alex Panshin <deadyaga@gmail.com>
  *
  * @codeCoverageIgnore
