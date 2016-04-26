@@ -267,7 +267,7 @@ class CloudinaryAdapter implements AdapterInterface
 
     private function normalizeMetadata($resource)
     {
-        return !is_array($resource) ? false : [
+        return !$resource instanceof \ArrayObject && !is_array($resource) ? false : [
             'type' => 'file',
             'path' => $resource['public_id'],
             'size' => array_key_exists('bytes', $resource) ? $resource['bytes'] : false,
