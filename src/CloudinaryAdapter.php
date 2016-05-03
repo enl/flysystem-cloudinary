@@ -34,11 +34,21 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function write($path, $contents, Config $config)
     {
+        $path = $this->removeExtension($path);
+
         try {
             return $this->normalizeMetadata($this->api->upload($path, $contents));
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    private function removeExtension($path)
+    {
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+        $path = $ext ? substr($path, 0, -1 + strlen($ext) * -1) : $path; //remove extension
+
+        return $path;
     }
 
     /**
@@ -136,6 +146,8 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function has($path)
     {
+        $path = $this->removeExtension($path);
+
         return $this->getMetadata($path);
     }
 
@@ -250,7 +262,7 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function getMimetype($path)
     {
-        return $this->getMetadata($path);
+        return false; //Cloudinary doesnt provide a mimetype
     }
 
     /**
