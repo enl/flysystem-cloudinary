@@ -70,9 +70,9 @@ class ApiFacade extends BaseApi
      *
      * @return resource
      */
-    public function content($path)
+    public function content($path, $transformations = [])
     {
-        return fopen($this->url($path), 'r');
+        return fopen($this->url($path, $transformations), 'r');
     }
 
     /**
