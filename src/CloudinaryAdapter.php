@@ -80,10 +80,10 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @return bool
      */
-    public function delete($path)
+    public function delete($path, $options = [])
     {
         try {
-            $response = $this->api->delete_resources([$path]);
+            $response = $this->api->delete_resources([$path], $options);
 
             return $response['deleted'][$path] === 'deleted';
         } catch (Api\Error $e) {
@@ -146,9 +146,9 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @return array|false
      */
-    public function read($path)
+    public function read($path, $transformation = [])
     {
-        if ($response = $this->readStream($path)) {
+        if ($response = $this->readStream($path, $transformation)) {
             return ['contents' => stream_get_contents($response['stream']), 'path' => $response['path']];
         }
 
@@ -160,11 +160,11 @@ class CloudinaryAdapter implements AdapterInterface
      *
      * @return array|bool
      */
-    public function readStream($path)
+    public function readStream($path, $transformation = [])
     {
         try {
             return [
-                'stream' => $this->api->content($path),
+                'stream' => $this->api->content($path, $transformation),
                 'path' => $path,
             ];
         } catch (\Exception $e) {
