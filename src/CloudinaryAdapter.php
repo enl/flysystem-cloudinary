@@ -289,7 +289,7 @@ class CloudinaryAdapter implements AdapterInterface
     }
 
     /**
-     * Returns a public id based on the filename but (without the file extension).
+     * Returns a public id based on the filename (without the file extension).
      *
      * @param $path
      * @return string
