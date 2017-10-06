@@ -294,6 +294,10 @@ class CloudinaryAdapter implements AdapterInterface
      */
     private function pathToPublicId($path)
     {
-        return pathinfo($path, PATHINFO_FILENAME);
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        return $extension
+            ? substr($path, 0, - (strlen($extension) + 1))
+            : $path;
     }
 }
