@@ -42,49 +42,49 @@ class ApiFacade extends BaseApi
     }
 
     /**
-     * @param string $path
+     * @param string $publicId
      * @param string $contents
      *
      * @return array
      */
-    public function upload($path, $contents)
+    public function upload($publicId, $contents)
     {
-        return Uploader::upload(new DataUri($contents), ['public_id' =>  pathinfo($path, PATHINFO_FILENAME)]);
+        return Uploader::upload(new DataUri($contents), ['public_id' => $publicId]);
     }
 
     /**
-     * @param string $path
-     * @param string $newpath
+     * @param string $publicId
+     * @param string $newPublicId
      *
      * @return array
      */
-    public function rename($path, $newpath)
+    public function rename($publicId, $newPublicId)
     {
-        return Uploader::rename($path, $newpath);
+        return Uploader::rename($publicId, $newPublicId);
     }
 
     /**
-     * Returns content of file with given path.
+     * Returns content of file with given public id.
      *
-     * @param string $path
+     * @param string $publicId
      *
      * @return resource
      */
-    public function content($path)
+    public function content($publicId)
     {
-        return fopen($this->url($path), 'r');
+        return fopen($this->url($publicId), 'r');
     }
 
     /**
-     * Returns URL of file with given $path and $transformations.
+     * Returns URL of file with given public id and transformations.
      *
-     * @param string $path
+     * @param string $publicId
      * @param array  $transformations
      *
      * @return string
      */
-    public function url($path, array $transformations = [])
+    public function url($publicId, array $transformations = [])
     {
-        return cloudinary_url($path, $transformations);
+        return cloudinary_url($publicId, $transformations);
     }
 }
