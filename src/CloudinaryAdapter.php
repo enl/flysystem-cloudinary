@@ -54,10 +54,8 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function update($path, $contents, Config $config)
     {
-        $publicId = $this->pathToPublicId($path);
-
         // Cloudinary does not distinguish create and update
-        return $this->write($publicId, $contents, $config);
+        return $this->write($path, $contents, $config);
     }
 
     /**
