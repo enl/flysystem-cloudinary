@@ -34,8 +34,10 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function write($path, $contents, Config $config)
     {
+        $publicId = $this->pathToPublicId($path);
+
         try {
-            return $this->normalizeMetadata($this->api->upload($path, $contents));
+            return $this->normalizeMetadata($this->api->upload($publicId, $contents));
         } catch (\Exception $e) {
             return false;
         }
@@ -66,8 +68,11 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function rename($path, $newpath)
     {
+        $publicId = $this->pathToPublicId($path);
+        $newPublicId = $this->pathToPublicId($newpath);
+
         try {
-            return (bool) $this->api->rename($path, $newpath);
+            return (bool) $this->api->rename($publicId, $newPublicId);
         } catch (\Exception $e) {
             return false;
         }
@@ -82,8 +87,10 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function delete($path)
     {
+        $publicId = $this->pathToPublicId($path);
+
         try {
-            $response = $this->api->delete_resources([$path]);
+            $response = $this->api->delete_resources([$publicId]);
 
             return $response['deleted'][$path] === 'deleted';
         } catch (Api\Error $e) {
@@ -162,9 +169,11 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function readStream($path)
     {
+        $publicId = $this->pathToPublicId($path);
+
         try {
             return [
-                'stream' => $this->api->content($path),
+                'stream' => $this->api->content($publicId),
                 'path' => $path,
             ];
         } catch (\Exception $e) {
@@ -222,8 +231,10 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function getMetadata($path)
     {
+        $publicId = $this->pathToPublicId($path);
+
         try {
-            return $this->normalizeMetadata($this->api->resource($path));
+            return $this->normalizeMetadata($this->api->resource($publicId));
         } catch (\Exception $e) {
             return false;
         }
@@ -273,5 +284,15 @@ class CloudinaryAdapter implements AdapterInterface
             'size' => array_key_exists('bytes', $resource) ? $resource['bytes'] : false,
             'timestamp' => array_key_exists('created_at', $resource) ? strtotime($resource['created_at']) : false,
         ];
+    }
+
+    /**
+     * Returns a public id based on the filename (without the file extension).
+     *
+     * @param $path
+     * @return string
+     */
+    private function pathToPublicId($path) {
+        return pathinfo($path, PATHINFO_FILENAME);
     }
 }
