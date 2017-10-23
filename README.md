@@ -35,10 +35,13 @@ $client = new CloudinaryClient([
     'cloud_name' => 'your-cloudname-here',
     'api_key' => 'api-key',
     'api_secret' => 'You-know-what-to-do',
-    'overwrite' => false, // set this to true if you want to overwrite existing files using $filesystem->write();
+    'overwrite' => true, // set this to true if you want to overwrite existing files using $filesystem->write();
 ]);
 
 $adapter = new CloudinaryAdapter($client);
+// This option disables assert that file is absent before calling `write`.
+// It is necessary if you want to overwrite files on `write` as Cloudinary does it by default.
+$filesystem = new Filesystem($adapter, ['disable_asserts' => true]);
 ```
 
 # Cloudinary features

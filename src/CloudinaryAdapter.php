@@ -8,6 +8,7 @@ use League\Flysystem\Adapter\Polyfill\StreamedCopyTrait;
 use League\Flysystem\Adapter\Polyfill\StreamedTrait;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
+use League\Flysystem\Filesystem;
 
 class CloudinaryAdapter implements AdapterInterface
 {
@@ -37,7 +38,9 @@ class CloudinaryAdapter implements AdapterInterface
         $publicId = $this->pathToPublicId($path);
 
         try {
-            return $this->normalizeMetadata($this->api->upload($publicId, $contents));
+            // If this option is set, Filesystem skips file absence assertion before write
+            $overwrite = $config->get('disable_asserts', false);
+            return $this->normalizeMetadata($this->api->upload($publicId, $contents, $overwrite));
         } catch (\Exception $e) {
             return false;
         }
@@ -54,7 +57,11 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function update($path, $contents, Config $config)
     {
-        // Cloudinary does not distinguish create and update
+        /**
+         * It's safe to change the object here because Filesystem created new one on each call
+         * @see Filesystem::prepareConfig()
+         */
+        $config->set('disable_asserts', true);
         return $this->write($path, $contents, $config);
     }
 
