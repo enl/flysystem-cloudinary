@@ -232,10 +232,12 @@ class CloudinaryAdapter implements AdapterInterface
         foreach ($storage['files'] as $file) {
             $dirname = dirname($file['path']);
 
-            $dirs[$dirname] = [
-                'type' => 'dir',
-                'path' => $dirname,
-            ];
+            if ($dirname !== '.') {
+                $dirs[$dirname] = [
+                    'type' => 'dir',
+                    'path' => $dirname,
+                ];
+            }
         }
 
         return array_merge($storage['files'], $dirs);
