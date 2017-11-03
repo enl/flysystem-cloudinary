@@ -13,7 +13,7 @@ use League\Flysystem\Filesystem;
 class CloudinaryAdapter implements AdapterInterface
 {
     /** @var ApiFacade */
-    private $api;
+    protected $api;
 
     use NotSupportingVisibilityTrait; // We have no visibility for paths, due all of them are public
     use StreamedTrait; // We have no streaming in Cloudinary API, so we need this polyfill
@@ -283,7 +283,7 @@ class CloudinaryAdapter implements AdapterInterface
         return $this->getMetadata($path);
     }
 
-    private function normalizeMetadata($resource)
+    protected function normalizeMetadata($resource)
     {
         return !$resource instanceof \ArrayObject && !is_array($resource) ? false : [
             'type' => 'file',
@@ -299,7 +299,7 @@ class CloudinaryAdapter implements AdapterInterface
      * @param $path
      * @return string
      */
-    private function pathToPublicId($path)
+    protected function pathToPublicId($path)
     {
         $extension = pathinfo($path, PATHINFO_EXTENSION);
 
