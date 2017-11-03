@@ -99,7 +99,7 @@ class CloudinaryAdapter implements AdapterInterface
         try {
             $response = $this->api->delete_resources([$publicId]);
 
-            return $response['deleted'][$path] === 'deleted';
+            return $response['deleted'][$publicId] === 'deleted';
         } catch (Api\Error $e) {
             return false;
         }

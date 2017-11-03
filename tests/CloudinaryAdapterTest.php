@@ -183,7 +183,7 @@ class CloudinaryAdapterTest extends MockeryTestCase
         $api->shouldReceive('delete_resources')
             ->with(['file'])
             ->once()->andReturn(['deleted' => ['file' => 'deleted']]);
-        $this->assertTrue($cloudinary->delete('file'));
+        $this->assertTrue($cloudinary->delete('file.jpg'));
     }
 
     /**
