@@ -62,7 +62,6 @@ class ApiFacade extends BaseApi
     /**
      * @param string $publicId
      * @param string $newPublicId
-     *
      * @return array
      */
     public function rename($publicId, $newPublicId)
@@ -74,12 +73,12 @@ class ApiFacade extends BaseApi
      * Returns content of file with given public id.
      *
      * @param string $publicId
-     *
+     * @param array $transformations
      * @return resource
      */
-    public function content($publicId)
+    public function content($publicId, array $transformations = [])
     {
-        return fopen($this->url($publicId), 'r');
+        return fopen($this->url($publicId, $transformations), 'r');
     }
 
     /**
@@ -87,7 +86,6 @@ class ApiFacade extends BaseApi
      *
      * @param string $publicId
      * @param array  $transformations
-     *
      * @return string
      */
     public function url($publicId, array $transformations = [])

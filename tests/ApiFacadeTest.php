@@ -28,7 +28,7 @@ class ApiFacadeTest extends MockeryTestCase
         self::$fopen_result = $expected = 'asdf';
 
         $api = m::mock('Enl\Flysystem\Cloudinary\ApiFacade[url]', []);
-        $api->shouldReceive('url')->with('path')->andReturn('something')->once();
+        $api->shouldReceive('url')->with('path', [])->andReturn('something')->once();
 
         $this->assertEquals($expected, $api->content('path'));
     }
