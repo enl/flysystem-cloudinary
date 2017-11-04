@@ -3,8 +3,6 @@
 namespace Enl\Flysystem\Cloudinary\Test;
 
 use Enl\Flysystem\Cloudinary\ApiFacade;
-use Mockery as m;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
 
 /**
  * Class ApiFacadeTest
@@ -12,7 +10,7 @@ use Mockery\Adapter\Phpunit\MockeryTestCase;
  * ApiFacade delegates everything to different parts of Cloudinary API library
  * @package Enl\Flysystem\Cloudinary\Test
  */
-class ApiFacadeTest extends MockeryTestCase
+class ApiFacadeTest extends \PHPUnit_Framework_TestCase
 {
     public static function setUpBeforeClass()
     {
@@ -25,10 +23,10 @@ class ApiFacadeTest extends MockeryTestCase
 
     public function testContent()
     {
+        self::$cloudinary_url_result = 'something';
         self::$fopen_result = $expected = 'asdf';
 
-        $api = m::mock('Enl\Flysystem\Cloudinary\ApiFacade[url]', []);
-        $api->shouldReceive('url')->with('path')->andReturn('something')->once();
+        $api = new ApiFacade();
 
         $this->assertEquals($expected, $api->content('path'));
     }

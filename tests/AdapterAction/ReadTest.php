@@ -1,0 +1,38 @@
+<?php
+
+namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
+
+use Cloudinary\Error;
+
+class ReadTest extends ActionTestCase
+{
+    public function testReturnsFalseOnFailure()
+    {
+        list($cloudinary, $api) = $this->buildAdapter();
+
+        $api->content('file')->shouldBeCalled()->willThrow(Error::class);
+
+        $this->assertFalse($cloudinary->read('file'));
+        $this->assertFalse($cloudinary->readStream('file'));
+    }
+
+    public function testReturnsArrayOnSuccess()
+    {
+        list($cloudinary, $api) = $this->buildAdapter();
+
+        $api->content('file')->willReturn(tmpfile());
+        $this->assertEquals(['path' => 'file', 'contents' => ''], $cloudinary->read('file'));
+    }
+
+    public function testReadStreamReturnsArrayOnSuccess()
+    {
+        list($cloudinary, $api) = $this->buildAdapter();
+
+        $api->content('file')->willReturn(tmpfile());
+        $response = $cloudinary->readStream('file');
+
+        $this->assertInternalType('array', $response);
+        $this->assertEquals('file', $response['path']);
+        $this->assertInternalType('resource', $response['stream']);
+    }
+}
