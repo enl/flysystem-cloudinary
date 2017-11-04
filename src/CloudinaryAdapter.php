@@ -226,7 +226,21 @@ class CloudinaryAdapter implements AdapterInterface
             return $this->doListContents($directory, $storage);
         }
 
-        return $storage['files'];
+        // Add the the dirnames of the returned files as directories
+        $dirs = [];
+
+        foreach ($storage['files'] as $file) {
+            $dirname = dirname($file['path']);
+
+            if ($dirname !== '.') {
+                $dirs[$dirname] = [
+                    'type' => 'dir',
+                    'path' => $dirname,
+                ];
+            }
+        }
+
+        return array_merge($storage['files'], $dirs);
     }
 
     /**

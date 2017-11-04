@@ -275,8 +275,41 @@ class CloudinaryAdapterTest extends MockeryTestCase
             ->with(array_merge($request, ['next_cursor' => 'cursor']))
             ->andReturn(['resources' => array_slice($expected, 2)]);
 
+
         $actual = $cloudinary->listContents();
         $this->assertEquals(count($expected), count($actual));
+    }
+
+    /**
+     * @param CloudinaryAdapter $cloudinary
+     * @param MockInterface $api
+     * @test
+     * @dataProvider adapterProvider
+     */
+    public function listContentsShouldReturnAllDirectories(CloudinaryAdapter $cloudinary, MockInterface $api)
+    {
+        $request = ['prefix' => '', 'max_results' => 500, 'type' => 'upload'];
+        $expected = [
+            ['public_id' => 'test-1'],
+            ['public_id' => 'dir1/test-2'],
+            ['public_id' => 'dir1/test-2'],
+            ['public_id' => 'dir2/test-3']
+        ];
+        $expectedNumDirs = 2;
+
+        $api->shouldReceive('resources')
+            ->once()
+            ->with($request)
+            ->andReturn(['resources' => array_slice($expected, 0, 2, false), 'next_cursor' => 'cursor']);
+
+        $api->shouldReceive('resources')
+            ->once()
+            ->with(array_merge($request, ['next_cursor' => 'cursor']))
+            ->andReturn(['resources' => array_slice($expected, 2)]);
+
+
+        $actual = $cloudinary->listContents();
+        $this->assertEquals(count($expected) + $expectedNumDirs, count($actual));
     }
 
     /**
