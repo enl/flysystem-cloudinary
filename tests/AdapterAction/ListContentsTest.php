@@ -1,6 +1,7 @@
 <?php
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
+
 use Prophecy\Argument;
 
 class ListContentsTest extends ActionTestCase

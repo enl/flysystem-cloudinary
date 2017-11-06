@@ -20,8 +20,15 @@
   },
   "autoload": {
     "psr-4": {
-      "Enl\\Flysystem\\Cloudinary\\": "src/",
-      "Enl\\Flysystem\\Cloudinary\\Test\\": "tests/"
+      "Enl\\Flysystem\\Cloudinary\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Enl\\Flysystem\\Cloudinary\\Test\\": "tests/"
+    },
+    "files": [
+      "tests/polyfill.php"
+    ]
   }
 }
