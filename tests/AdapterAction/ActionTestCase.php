@@ -12,7 +12,7 @@ abstract class ActionTestCase extends \PHPUnit_Framework_TestCase
      */
     final protected function buildAdapter()
     {
-        $api = $this->prophesize(ApiFacade::class);
+        $api = $this->prophesize('\Enl\Flysystem\Cloudinary\ApiFacade');
 
         return [new CloudinaryAdapter($api->reveal()), $api];
     }
