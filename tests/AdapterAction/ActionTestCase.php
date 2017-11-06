@@ -2,7 +2,6 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
-use Enl\Flysystem\Cloudinary\ApiFacade;
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 
 abstract class ActionTestCase extends \PHPUnit_Framework_TestCase

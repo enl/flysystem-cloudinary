@@ -2,8 +2,6 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
-use Cloudinary\Api\Error;
-
 class GetMetadataTest extends ActionTestCase
 {
     public function metadataProvider()
@@ -19,7 +17,7 @@ class GetMetadataTest extends ActionTestCase
 
     /**
      * @dataProvider  metadataProvider
-     * @test
+     * @param $method
      */
     public function testMetadataCallsSuccess($method)
     {
@@ -44,13 +42,12 @@ class GetMetadataTest extends ActionTestCase
 
     /**
      * @param $method
-     * @test
      * @dataProvider metadataProvider
      */
     public function testMetadataCallsFailure($method)
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->resource()->willThrow(Error::class);
+        $api->resource()->willThrow('Cloudinary\Api\Error');
 
         $this->assertFalse($cloudinary->{$method}('path'));
     }

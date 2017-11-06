@@ -2,7 +2,6 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
-use Cloudinary\Error;
 use League\Flysystem\Config;
 
 class WriteTest extends ActionTestCase
@@ -12,7 +11,7 @@ class WriteTest extends ActionTestCase
         list($cloudinary, $api) = $this->buildAdapter();
         $api->upload('path', 'contents', false)
             ->shouldBeCalled()
-            ->willThrow(Error::class);
+            ->willThrow('Cloudinary\Error');
 
         $this->assertFalse($cloudinary->write('path', 'contents', new Config()));
         $this->assertFalse($cloudinary->writeStream('path', tmpfile(), new Config()));
@@ -20,6 +19,10 @@ class WriteTest extends ActionTestCase
 
     /**
      * @dataProvider writeParametersProvider
+     *
+     * @param $method
+     * @param $path
+     * @param $content
      */
     public function testReturnsNormalizedMetadataOnSuccess($method, $path, $content)
     {

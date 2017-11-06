@@ -13,14 +13,14 @@ class VisibilityTest extends ActionTestCase
     public function testGetVisibility()
     {
         list($cloudinary) = $this->buildAdapter();
-        $this->setExpectedException(\LogicException::class);
+        $this->setExpectedException('\LogicException');
         $cloudinary->setVisibility('path', 'visibility');
     }
 
     public function testSetVisibility()
     {
         list($cloudinary) = $this->buildAdapter();
-        $this->setExpectedException(\LogicException::class);
+        $this->setExpectedException('\LogicException');
         $cloudinary->getVisibility('path');
     }
 }

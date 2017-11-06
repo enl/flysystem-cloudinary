@@ -2,7 +2,6 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
-use Cloudinary\Error;
 use League\Flysystem\Config;
 use Prophecy\Argument;
 
@@ -11,7 +10,7 @@ class UpdateTest extends ActionTestCase
     public function testReturnsFalseOnFailure()
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->upload(Argument::any())->willThrow(Error::class);
+        $api->upload(Argument::any())->willThrow('Cloudinary\Error');
         $this->assertFalse($cloudinary->update('path', 'contents', new Config()));
     }
 

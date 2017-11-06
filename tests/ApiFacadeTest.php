@@ -24,7 +24,7 @@ class ApiFacadeTest extends \PHPUnit_Framework_TestCase
     public function testContent()
     {
         self::$cloudinary_url_result = 'something';
-        self::$fopen_result = $expected = 'asdf';
+        self::$fopen_result = $expected = 'test';
 
         $api = new ApiFacade();
 
@@ -33,7 +33,7 @@ class ApiFacadeTest extends \PHPUnit_Framework_TestCase
 
     public function testUrl()
     {
-        self::$cloudinary_url_result = $expected = 'asdf';
+        self::$cloudinary_url_result = $expected = 'test';
 
         $api = new ApiFacade();
 

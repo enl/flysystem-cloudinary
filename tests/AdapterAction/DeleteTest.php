@@ -2,8 +2,6 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
-use Cloudinary\Api\Error;
-
 class DeleteTest extends ActionTestCase
 {
     public function testReturnsFalseOnFailure()
@@ -16,7 +14,7 @@ class DeleteTest extends ActionTestCase
     public function testReturnsFalseOnException()
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->delete_resources(['file'])->willThrow(Error::class);
+        $api->delete_resources(['file'])->willThrow('Cloudinary\Api\Error');
         $this->assertFalse($cloudinary->delete('file'));
     }
 
@@ -39,7 +37,7 @@ class DeleteTest extends ActionTestCase
     public function testDeleteDirFailure()
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->delete_resources_by_prefix('path/')->willThrow(Error::class);
+        $api->delete_resources_by_prefix('path/')->willThrow('Cloudinary\Api\Error');
         $this->assertFalse($cloudinary->deleteDir('path/'));
     }
 }

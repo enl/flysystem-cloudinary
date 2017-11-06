@@ -2,15 +2,13 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
-use Cloudinary\Error;
-
 class ReadTest extends ActionTestCase
 {
     public function testReturnsFalseOnFailure()
     {
         list($cloudinary, $api) = $this->buildAdapter();
 
-        $api->content('file')->shouldBeCalled()->willThrow(Error::class);
+        $api->content('file')->shouldBeCalled()->willThrow('Cloudinary\Error');
 
         $this->assertFalse($cloudinary->read('file'));
         $this->assertFalse($cloudinary->readStream('file'));

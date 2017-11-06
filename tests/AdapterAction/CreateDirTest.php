@@ -15,10 +15,11 @@ class CreateDirTest extends ActionTestCase
     }
 
     /**
-     * @test
      * @dataProvider createDirProvider
+     * @param $path
+     * @param $expected
      */
-    public function createDirShouldAlwaysReturnSuccess($path, $expected)
+    public function testCreateDir($path, $expected)
     {
         list($cloudinary,) = $this->buildAdapter();
 
