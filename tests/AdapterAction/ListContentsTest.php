@@ -13,6 +13,13 @@ class ListContentsTest extends ActionTestCase
         $this->assertEquals([], $cloudinary->listContents());
     }
 
+    public function testReturnsEmptyArrayOnNonExistentDir()
+    {
+        list($cloudinary, $api) = $this->buildAdapter();
+        $api->resources(Argument::any())->shouldBeCalled()->willReturn(['resources' => []]);
+        $this->assertEquals([], $cloudinary->listContents('test'));
+    }
+
     public function testCallsNextCursor()
     {
         list($cloudinary, $api) = $this->buildAdapter();

@@ -207,7 +207,7 @@ class CloudinaryAdapter implements AdapterInterface
         }
     }
 
-    private function doListContents($directory = '', array $storage = [])
+    private function doListContents($directory = '', array $storage = ['files' => []])
     {
         $options = ['prefix' => $directory, 'max_results' => 500, 'type' => 'upload'];
         if (array_key_exists('next_cursor', $storage)) {
@@ -217,7 +217,6 @@ class CloudinaryAdapter implements AdapterInterface
         $response = $this->api->resources($options);
 
         foreach ($response['resources'] as $resource) {
-            ;
             $storage['files'][] = $this->normalizeMetadata($resource);
         }
         if (array_key_exists('next_cursor', $response)) {
