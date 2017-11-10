@@ -201,10 +201,29 @@ class CloudinaryAdapter implements AdapterInterface
     public function listContents($directory = '', $recursive = false)
     {
         try {
-            return $this->doListContents($directory);
+            return $this->addDirNames($this->doListContents($directory));
         } catch (\Exception $e) {
             return [];
         }
+    }
+
+    private function addDirNames($contents)
+    {
+        // Add the the dirnames of the returned files as directories
+        $dirs = [];
+
+        foreach ($contents as $file) {
+            $dirname = dirname($file['path']);
+
+            if ($dirname !== '.') {
+                $dirs[$dirname] = [
+                    'type' => 'dir',
+                    'path' => $dirname,
+                ];
+            }
+        }
+
+        return array_merge($contents, $dirs);
     }
 
     private function doListContents($directory = '', array $storage = ['files' => []])
@@ -225,21 +244,7 @@ class CloudinaryAdapter implements AdapterInterface
             return $this->doListContents($directory, $storage);
         }
 
-        // Add the the dirnames of the returned files as directories
-        $dirs = [];
-
-        foreach ($storage['files'] as $file) {
-            $dirname = dirname($file['path']);
-
-            if ($dirname !== '.') {
-                $dirs[$dirname] = [
-                    'type' => 'dir',
-                    'path' => $dirname,
-                ];
-            }
-        }
-
-        return array_merge($storage['files'], $dirs);
+        return $storage['files'];
     }
 
     /**
