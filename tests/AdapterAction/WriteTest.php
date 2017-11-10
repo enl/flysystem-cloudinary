@@ -14,7 +14,7 @@ class WriteTest extends ActionTestCase
             ->willThrow('Cloudinary\Error');
 
         $this->assertFalse($cloudinary->write('path', 'contents', new Config()));
-        $this->assertFalse($cloudinary->writeStream('path', tmpfile(), new Config()));
+        $this->assertFalse($cloudinary->writeStream('path', fopen('php://memory', 'r+'), new Config()));
     }
 
     /**
@@ -41,7 +41,7 @@ class WriteTest extends ActionTestCase
     {
         return [
             'write' => ['write', 'test-path', 'content'],
-            'writeStream' => ['writeStream', 'test-path', tmpfile()]
+            'writeStream' => ['writeStream', 'test-path', fopen('php://memory', 'r+')]
         ];
     }
 }

@@ -18,7 +18,7 @@ class ReadTest extends ActionTestCase
     {
         list($cloudinary, $api) = $this->buildAdapter();
 
-        $api->content('file')->willReturn(tmpfile());
+        $api->content('file')->willReturn(fopen('php://memory', 'r+'));
         $this->assertEquals(['path' => 'file', 'contents' => ''], $cloudinary->read('file'));
     }
 
@@ -26,7 +26,7 @@ class ReadTest extends ActionTestCase
     {
         list($cloudinary, $api) = $this->buildAdapter();
 
-        $api->content('file')->willReturn(tmpfile());
+        $api->content('file')->willReturn(fopen('php://memory', 'r+'));
         $response = $cloudinary->readStream('file');
 
         $this->assertInternalType('array', $response);
