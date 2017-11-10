@@ -73,7 +73,7 @@ if (!function_exists('array_column')) {
                 $paramsIndexKey = (string) $params[2];
             }
         }
-        $resultArray = array();
+        $resultArray = [];
         foreach ($paramsInput as $row) {
             $key = $value = null;
             $keySet = $valueSet = false;
