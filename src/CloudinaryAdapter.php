@@ -190,8 +190,11 @@ class CloudinaryAdapter implements AdapterInterface
 
     /**
      * List contents of a directory.
-     * Unfortunately, Cloudinary does not support non recursive directory scan
+     * Cloudinary does not support non recursive directory scan
      * because they treat filename prefixes as folders.
+     *
+     * Good news is Flysystem can handle this and will filter out subdirectory content
+     * if $recursive is false.
      *
      * @param string $directory
      * @param bool   $recursive
@@ -223,7 +226,11 @@ class CloudinaryAdapter implements AdapterInterface
             }
         }
 
-        return array_merge($contents, $dirs);
+        foreach($dirs as $dir) {
+            $contents[] = $dir;
+        }
+
+        return $contents;
     }
 
     private function doListContents($directory = '', array $storage = ['files' => []])

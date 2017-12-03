@@ -61,15 +61,12 @@ class ListContentsTest extends ActionTestCase
 
         $api->resources($request)->willReturn(['resources' => $response]);
         $actual = $cloudinary->listContents('');
+        $dirs = array_column($actual, 'path');
 
-        $dirs = array_column(
-            array_filter($actual, function ($row) {
-                return $row['type'] === 'dir';
-            }),
-            'path'
+        $this->assertEquals(
+            ['test-1', 'dir1/test-2', 'dir1/test-2', 'dir2/test-3', 'dir1', 'dir2'],
+            $dirs
         );
-
-        $this->assertEquals(['dir1', 'dir2'], $dirs);
     }
 
     public function testReturnsNormalizedMetadata()
