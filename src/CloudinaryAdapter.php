@@ -36,10 +36,9 @@ class CloudinaryAdapter implements AdapterInterface
     public function write($path, $contents, Config $config)
     {
         $publicId = $this->pathToPublicId($path);
+        $overwrite = (bool)$config->get('disable_asserts');
 
         try {
-            // If this option is set, Filesystem skips file absence assertion before write
-            $overwrite = $config->get('disable_asserts', false);
             return $this->normalizeMetadata($this->api->upload($publicId, $contents, $overwrite));
         } catch (\Exception $e) {
             return false;
@@ -57,12 +56,13 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function update($path, $contents, Config $config)
     {
-        /**
-         * It's safe to change the object here because Filesystem created new one on each call
-         * @see Filesystem::prepareConfig()
-         */
-        $config->set('disable_asserts', true);
-        return $this->write($path, $contents, $config);
+        $publicId = $this->pathToPublicId($path);
+
+        try {
+            return $this->normalizeMetadata($this->api->upload($publicId, $contents, true));
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**
