@@ -226,7 +226,7 @@ class CloudinaryAdapter implements AdapterInterface
             }
         }
 
-        foreach($dirs as $dir) {
+        foreach ($dirs as $dir) {
             $contents[] = $dir;
         }
 
