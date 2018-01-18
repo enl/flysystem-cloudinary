@@ -4,6 +4,8 @@ namespace Enl\Flysystem\Cloudinary;
 
 use Cloudinary\Api as BaseApi;
 use Cloudinary\Uploader;
+use Enl\Flysystem\Cloudinary\Converter\AsIsPathConverter;
+use Enl\Flysystem\Cloudinary\Converter\PathConverterInterface;
 
 /**
  * Class ApiFacade.
@@ -11,13 +13,20 @@ use Cloudinary\Uploader;
 class ApiFacade extends BaseApi
 {
     /**
-     * @param array $options
+     * @var PathConverterInterface
      */
-    public function __construct(array $options = [])
+    private $converter;
+
+    /**
+     * @param array $options
+     * @param PathConverterInterface|null $converter
+     */
+    public function __construct(array $options = [], PathConverterInterface $converter = null)
     {
         if (count($options)) {
             $this->configure($options);
         }
+        $this->converter = $converter ?: new AsIsPathConverter();
     }
 
     /**
