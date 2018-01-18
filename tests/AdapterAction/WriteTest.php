@@ -29,6 +29,7 @@ class WriteTest extends ActionTestCase
         list($cloudinary, $api) = $this->buildAdapter();
         $api->upload($path, is_resource($content) ? stream_get_contents($content) : $content, false)->willReturn([
             'public_id' => $path,
+            'path' => $path,
             'bytes' => 123123
         ]);
         $response = $cloudinary->$method($path, $content, new Config());

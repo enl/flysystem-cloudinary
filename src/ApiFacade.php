@@ -43,6 +43,46 @@ class ApiFacade extends BaseApi
     }
 
     /**
+     * @param $path
+     * @param array $options
+     *
+     * @return BaseApi\Response
+     */
+    public function resource($path, $options = [])
+    {
+        $resource = parent::resource($this->converter->pathToId($path));
+
+        return $this->addPathToResource($resource);
+    }
+
+    public function resources($options = [])
+    {
+        $response = parent::resources($options);
+        $response['resources'] = array_map([$this, 'addPathToResource'], $response['resources']);
+
+        return $response;
+    }
+
+    public function deleteResources($paths, $options = [])
+    {
+        $map = [];
+
+        foreach ($paths as $path) {
+            $map[$this->converter->pathToId($path)] = $path;
+        }
+        $response = parent::delete_resources(array_keys($map), $options);
+
+        $deleted = [];
+
+        foreach ($response['deleted'] as $id => $status) {
+            $deleted[$map[$id]] = $status;
+        }
+        $response['deleted'] = $deleted;
+
+        return $response;
+    }
+
+    /**
      * @param string $preset
      */
     public function setUploadPreset($preset)
@@ -51,54 +91,70 @@ class ApiFacade extends BaseApi
     }
 
     /**
-     * @param string $publicId
+     * @param string $path
      * @param string $contents
      * @param bool $overwrite
      * @return array
      */
-    public function upload($publicId, $contents, $overwrite = false)
+    public function upload($path, $contents, $overwrite = false)
     {
         $options = [
-            'public_id' => $publicId,
+            'public_id' => $this->converter->pathToId($path),
             'overwrite' => $overwrite
         ];
 
-        return Uploader::upload(new DataUri($contents), $options);
+        return $this->addPathToResource(Uploader::upload(new DataUri($contents), $options));
     }
 
     /**
-     * @param string $publicId
-     * @param string $newPublicId
+     * @param string $path
+     * @param string $newPath
      *
      * @return array
      */
-    public function rename($publicId, $newPublicId)
+    public function rename($path, $newPath)
     {
-        return Uploader::rename($publicId, $newPublicId);
+        $resource = Uploader::rename(
+            $this->converter->pathToId($path),
+            $this->converter->pathToId($newPath)
+        );
+
+        return $this->addPathToResource($resource);
     }
 
     /**
      * Returns content of file with given public id.
      *
-     * @param string $publicId
-     *
+     * @param string $path
      * @return resource
      */
-    public function content($publicId)
+    public function content($path)
     {
-        return fopen($this->url($publicId), 'r');
+        return fopen($this->url($path), 'r');
     }
 
     /**
      * Returns URL of file with given public id and transformations.
      *
-     * @param string $publicId
+     * @param string $path
      * @param array  $transformations
      *
      * @return string
      */
-    public function url($publicId, array $transformations = [])
+    public function url($path, array $transformations = [])
     {
-        return cloudinary_url($publicId, $transformations);
+        return cloudinary_url($this->converter->pathToId($path), $transformations);
+    }
+
+    /**
+     * @param $resource
+     *
+     * @return mixed
+     */
+    private function addPathToResource($resource)
+    {
+        $resource['path'] = $this->converter->idToPath($resource);
+
+        return $resource;
     }
 }

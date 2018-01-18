@@ -35,11 +35,10 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function write($path, $contents, Config $config)
     {
-        $publicId = $this->pathToPublicId($path);
         $overwrite = (bool)$config->get('disable_asserts');
 
         try {
-            return $this->normalizeMetadata($this->api->upload($publicId, $contents, $overwrite));
+            return $this->normalizeMetadata($this->api->upload($path, $contents, $overwrite));
         } catch (\Exception $e) {
             return false;
         }
@@ -56,10 +55,8 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function update($path, $contents, Config $config)
     {
-        $publicId = $this->pathToPublicId($path);
-
         try {
-            return $this->normalizeMetadata($this->api->upload($publicId, $contents, true));
+            return $this->normalizeMetadata($this->api->upload($path, $contents, true));
         } catch (\Exception $e) {
             return false;
         }
@@ -69,17 +66,14 @@ class CloudinaryAdapter implements AdapterInterface
      * Rename a file.
      *
      * @param string $path
-     * @param string $newpath
+     * @param string $newPath
      *
      * @return bool
      */
-    public function rename($path, $newpath)
+    public function rename($path, $newPath)
     {
-        $publicId = $this->pathToPublicId($path);
-        $newPublicId = $this->pathToPublicId($newpath);
-
         try {
-            return (bool) $this->api->rename($publicId, $newPublicId);
+            return (bool) $this->api->rename($path, $newPath);
         } catch (\Exception $e) {
             return false;
         }
@@ -94,12 +88,10 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function delete($path)
     {
-        $publicId = $this->pathToPublicId($path);
-
         try {
-            $response = $this->api->delete_resources([$publicId]);
+            $response = $this->api->deleteResources([$path]);
 
-            return $response['deleted'][$publicId] === 'deleted';
+            return $response['deleted'][$path] === 'deleted';
         } catch (Api\Error $e) {
             return false;
         }
@@ -176,11 +168,9 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function readStream($path)
     {
-        $publicId = $this->pathToPublicId($path);
-
         try {
             return [
-                'stream' => $this->api->content($publicId),
+                'stream' => $this->api->content($path),
                 'path' => $path,
             ];
         } catch (\Exception $e) {
@@ -263,10 +253,8 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function getMetadata($path)
     {
-        $publicId = $this->pathToPublicId($path);
-
         try {
-            return $this->normalizeMetadata($this->api->resource($publicId));
+            return $this->normalizeMetadata($this->api->resource($path));
         } catch (\Exception $e) {
             return false;
         }
@@ -312,24 +300,9 @@ class CloudinaryAdapter implements AdapterInterface
     {
         return !$resource instanceof \ArrayObject && !is_array($resource) ? false : [
             'type' => 'file',
-            'path' => $resource['public_id'],
+            'path' => $resource['path'],
             'size' => array_key_exists('bytes', $resource) ? $resource['bytes'] : false,
             'timestamp' => array_key_exists('created_at', $resource) ? strtotime($resource['created_at']) : false,
         ];
-    }
-
-    /**
-     * Returns a public id based on the filename (without the file extension).
-     *
-     * @param $path
-     * @return string
-     */
-    private function pathToPublicId($path)
-    {
-        $extension = pathinfo($path, PATHINFO_EXTENSION);
-
-        return $extension
-            ? substr($path, 0, - (strlen($extension) + 1))
-            : $path;
     }
 }

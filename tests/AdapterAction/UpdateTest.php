@@ -17,7 +17,11 @@ class UpdateTest extends ActionTestCase
     public function testReturnsNormalizedMetadataOnSuccess()
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->upload('test-path', 'contents', true)->willReturn(['public_id' => 'test-path', 'bytes' => 123123]);
+        $api->upload('test-path', 'contents', true)->willReturn([
+            'public_id' => 'test-path',
+            'path' => 'test-path',
+            'bytes' => 123123
+        ]);
 
         $response = $cloudinary->update('test-path', 'contents', new Config());
 

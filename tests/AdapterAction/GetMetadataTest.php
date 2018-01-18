@@ -21,13 +21,13 @@ class GetMetadataTest extends ActionTestCase
      */
     public function testMetadataCallsSuccess($method)
     {
-        $public_id = 'file';
+        $public_id = $path = 'file';
         $bytes = 123123;
         $created_at = date('Y-m-d H:i:s');
 
         list ($cloudinary, $api) = $this->buildAdapter();
 
-        $api->resource('file')->willReturn(compact('public_id', 'bytes', 'created_at'));
+        $api->resource('file')->willReturn(compact('public_id', 'path', 'bytes', 'created_at'));
 
         $expected = [
             'type' => 'file',

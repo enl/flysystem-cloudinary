@@ -4,13 +4,8 @@ namespace Enl\Flysystem\Cloudinary\Converter;
 
 use Cloudinary\Api\Response;
 
-/**
- * Class AsIsPathConverter
- * Default implementation of PathConverterInterface just does nothing.
- */
-class AsIsPathConverter implements PathConverterInterface
+class TruncateExtensionConverter implements PathConverterInterface
 {
-
     /**
      * Converts path to public Id
      *
@@ -19,7 +14,11 @@ class AsIsPathConverter implements PathConverterInterface
      */
     public function pathToId($path)
     {
-        return $path;
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+
+        return $extension
+            ? substr($path, 0, - (strlen($extension) + 1))
+            : $path;
     }
 
     /**
@@ -30,6 +29,6 @@ class AsIsPathConverter implements PathConverterInterface
      */
     public function idToPath($resource)
     {
-        return $resource['public_id'];
+        return $resource['public_id'] . '.' . $resource['format'];
     }
 }

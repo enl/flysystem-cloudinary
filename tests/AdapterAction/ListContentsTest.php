@@ -25,9 +25,9 @@ class ListContentsTest extends ActionTestCase
         list($cloudinary, $api) = $this->buildAdapter();
         $request = ['prefix' => '', 'max_results' => 500, 'type' => 'upload'];
         $expected = [
-            ['public_id' => 'test-1'],
-            ['public_id' => 'test-2'],
-            ['public_id' => 'test-3']
+            ['public_id' => 'test-1', 'path' => 'test-1'],
+            ['public_id' => 'test-2', 'path' => 'test-2'],
+            ['public_id' => 'test-3', 'path' => 'test-3'],
         ];
 
         $api->resources($request)->shouldBeCalled()->willReturn([
@@ -53,10 +53,10 @@ class ListContentsTest extends ActionTestCase
         list ($cloudinary, $api) = $this->buildAdapter();
         $request = ['prefix' => '', 'max_results' => 500, 'type' => 'upload'];
         $response = [
-            ['public_id' => 'test-1'],
-            ['public_id' => 'dir1/test-2'],
-            ['public_id' => 'dir1/test-2'],
-            ['public_id' => 'dir2/test-3']
+            ['public_id' => 'test-1', 'path' => 'test-1'],
+            ['public_id' => 'dir1/test-2', 'path' => 'dir1/test-2',],
+            ['public_id' => 'dir1/test-3', 'path' => 'dir1/test-3',],
+            ['public_id' => 'dir2/test-4', 'path' => 'dir2/test-4',],
         ];
 
         $api->resources($request)->willReturn(['resources' => $response]);
@@ -64,7 +64,7 @@ class ListContentsTest extends ActionTestCase
         $dirs = array_column($actual, 'path');
 
         $this->assertEquals(
-            ['test-1', 'dir1/test-2', 'dir1/test-2', 'dir2/test-3', 'dir1', 'dir2'],
+            ['test-1', 'dir1/test-2', 'dir1/test-3', 'dir2/test-4', 'dir1', 'dir2'],
             $dirs
         );
     }
@@ -72,12 +72,12 @@ class ListContentsTest extends ActionTestCase
     public function testReturnsNormalizedMetadata()
     {
         list ($cloudinary, $api) = $this->buildAdapter();
-        $public_id = 'test';
+        $public_id = $path = 'test';
         $bytes = 123123;
         $created_at = date('Y-m-d H:i:s');
 
         $api->resources(Argument::any())->willReturn([
-            'resources' => [compact('public_id', 'bytes', 'created_at')]
+            'resources' => [compact('public_id', 'path', 'bytes', 'created_at')]
         ]);
 
         $expected = [

@@ -2,6 +2,8 @@
 
 namespace Enl\Flysystem\Cloudinary\Converter;
 
+use Cloudinary\Api\Response;
+
 /**
  * This interface is used to convert given path to cloudinary public id and vice versa
  *
@@ -24,7 +26,7 @@ interface PathConverterInterface
     /**
      * Converts id to path
      *
-     * @param string $id
+     * @param Response $id
      * @return string
      */
     public function idToPath($id);
