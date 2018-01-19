@@ -5,7 +5,7 @@
 
 This is a [Flysystem adapter](https://github.com/thephpleague/flysystem) for [Cloudinary API](http://cloudinary.com/documentation/php_integration).
 
-# Installation
+## Installation
 
 ```bash
 composer require enl/flysystem-cloudinary '~1.0'
@@ -21,7 +21,7 @@ Or just add the following string to `require` part of your `composer.json`:
 }
 ```
 
-# Bootstrap
+## Bootstrap
 
 ``` php
 <?php
@@ -44,10 +44,14 @@ $adapter = new CloudinaryAdapter($client);
 $filesystem = new Filesystem($adapter, ['disable_asserts' => true]);
 ```
 
-# Cloudinary features
+## Cloudinary features
 
 Please, keep in mind three possible pain-in-asses of Cloudinary:
  
 * It adds automatically file extension to its public_id. In terms of Flysystem, cloudinary's public_id is considered as filename. But if you set public_id as 'test.jpg' Cloudinary will save the file as 'test.jpg.jpg'. In order to work it around, you can use [PathConverterInterface](doc/path_converter.md).
 * It does not support folders creation through the API
 * If you want to save your files using folder you should set public_ids like 'test/test.jpg' and allow automated folders creation in your account settings in Cloudinary dashboard.
+
+#### Good news!
+
+The library supports [Cloudinary Transformations](doc/transformations.md)!
