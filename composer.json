@@ -16,13 +16,19 @@
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.3.1",
-    "phpunit/phpunit": "~4.0",
-    "mockery/mockery": "0.9.*"
+    "phpunit/phpunit": "~4.8"
   },
   "autoload": {
     "psr-4": {
-      "Enl\\Flysystem\\Cloudinary\\": "src/",
-      "Enl\\Flysystem\\Cloudinary\\Test\\": "tests/"
+      "Enl\\Flysystem\\Cloudinary\\": "src/"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Enl\\Flysystem\\Cloudinary\\Test\\": "tests/"
+    },
+    "files": [
+      "tests/polyfill.php"
+    ]
   }
 }

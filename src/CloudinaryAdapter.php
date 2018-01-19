@@ -35,12 +35,10 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function write($path, $contents, Config $config)
     {
-        $publicId = $this->pathToPublicId($path);
+        $overwrite = (bool)$config->get('disable_asserts');
 
         try {
-            // If this option is set, Filesystem skips file absence assertion before write
-            $overwrite = $config->get('disable_asserts', false);
-            return $this->normalizeMetadata($this->api->upload($publicId, $contents, $overwrite));
+            return $this->normalizeMetadata($this->api->upload($path, $contents, $overwrite));
         } catch (\Exception $e) {
             return false;
         }
@@ -57,29 +55,25 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function update($path, $contents, Config $config)
     {
-        /**
-         * It's safe to change the object here because Filesystem created new one on each call
-         * @see Filesystem::prepareConfig()
-         */
-        $config->set('disable_asserts', true);
-        return $this->write($path, $contents, $config);
+        try {
+            return $this->normalizeMetadata($this->api->upload($path, $contents, true));
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 
     /**
      * Rename a file.
      *
      * @param string $path
-     * @param string $newpath
+     * @param string $newPath
      *
      * @return bool
      */
-    public function rename($path, $newpath)
+    public function rename($path, $newPath)
     {
-        $publicId = $this->pathToPublicId($path);
-        $newPublicId = $this->pathToPublicId($newpath);
-
         try {
-            return (bool) $this->api->rename($publicId, $newPublicId);
+            return (bool) $this->api->rename($path, $newPath);
         } catch (\Exception $e) {
             return false;
         }
@@ -94,10 +88,8 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function delete($path)
     {
-        $publicId = $this->pathToPublicId($path);
-
         try {
-            $response = $this->api->delete_resources([$publicId]);
+            $response = $this->api->deleteResources([$path]);
 
             return $response['deleted'][$path] === 'deleted';
         } catch (Api\Error $e) {
@@ -176,11 +168,9 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function readStream($path)
     {
-        $publicId = $this->pathToPublicId($path);
-
         try {
             return [
-                'stream' => $this->api->content($publicId),
+                'stream' => $this->api->content($path),
                 'path' => $path,
             ];
         } catch (\Exception $e) {
@@ -190,8 +180,11 @@ class CloudinaryAdapter implements AdapterInterface
 
     /**
      * List contents of a directory.
-     * Unfortunately, Cloudinary does not support non recursive directory scan
+     * Cloudinary does not support non recursive directory scan
      * because they treat filename prefixes as folders.
+     *
+     * Good news is Flysystem can handle this and will filter out subdirectory content
+     * if $recursive is false.
      *
      * @param string $directory
      * @param bool   $recursive
@@ -201,13 +194,36 @@ class CloudinaryAdapter implements AdapterInterface
     public function listContents($directory = '', $recursive = false)
     {
         try {
-            return $this->doListContents($directory);
+            return $this->addDirNames($this->doListContents($directory));
         } catch (\Exception $e) {
             return [];
         }
     }
 
-    private function doListContents($directory = '', array $storage = [])
+    private function addDirNames($contents)
+    {
+        // Add the the dirnames of the returned files as directories
+        $dirs = [];
+
+        foreach ($contents as $file) {
+            $dirname = dirname($file['path']);
+
+            if ($dirname !== '.') {
+                $dirs[$dirname] = [
+                    'type' => 'dir',
+                    'path' => $dirname,
+                ];
+            }
+        }
+
+        foreach ($dirs as $dir) {
+            $contents[] = $dir;
+        }
+
+        return $contents;
+    }
+
+    private function doListContents($directory = '', array $storage = ['files' => []])
     {
         $options = ['prefix' => $directory, 'max_results' => 500, 'type' => 'upload'];
         if (array_key_exists('next_cursor', $storage)) {
@@ -217,7 +233,6 @@ class CloudinaryAdapter implements AdapterInterface
         $response = $this->api->resources($options);
 
         foreach ($response['resources'] as $resource) {
-            ;
             $storage['files'][] = $this->normalizeMetadata($resource);
         }
         if (array_key_exists('next_cursor', $response)) {
@@ -238,10 +253,8 @@ class CloudinaryAdapter implements AdapterInterface
      */
     public function getMetadata($path)
     {
-        $publicId = $this->pathToPublicId($path);
-
         try {
-            return $this->normalizeMetadata($this->api->resource($publicId));
+            return $this->normalizeMetadata($this->api->resource($path));
         } catch (\Exception $e) {
             return false;
         }
@@ -287,24 +300,9 @@ class CloudinaryAdapter implements AdapterInterface
     {
         return !$resource instanceof \ArrayObject && !is_array($resource) ? false : [
             'type' => 'file',
-            'path' => $resource['public_id'],
+            'path' => $resource['path'],
             'size' => array_key_exists('bytes', $resource) ? $resource['bytes'] : false,
             'timestamp' => array_key_exists('created_at', $resource) ? strtotime($resource['created_at']) : false,
         ];
-    }
-
-    /**
-     * Returns a public id based on the filename (without the file extension).
-     *
-     * @param $path
-     * @return string
-     */
-    private function pathToPublicId($path)
-    {
-        $extension = pathinfo($path, PATHINFO_EXTENSION);
-
-        return $extension
-            ? substr($path, 0, - (strlen($extension) + 1))
-            : $path;
     }
 }
