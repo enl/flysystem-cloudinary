@@ -32,7 +32,7 @@ before_install:
   - if [[ $EXECUTE_COVERAGE == 'true' ]]; then composer require --no-update php-coveralls/php-coveralls ; fi
 
 install:
-  - travis_retry composer update --no-interaction --prefer-source
+  - travis_retry composer update --no-interaction --prefer-source $COMPOSER_OPTS
 
 script:
   - if [[ $EXECUTE_COVERAGE == 'true' ]]; then ./vendor/bin/phpunit --coverage-clover clover.xml ; fi
