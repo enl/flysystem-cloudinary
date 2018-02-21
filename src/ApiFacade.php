@@ -18,6 +18,11 @@ class ApiFacade extends BaseApi
     private $converter;
 
     /**
+     * @var array
+     */
+    private $deleteOptions = [];
+
+    /**
      * @param array $options
      * @param PathConverterInterface|null $converter
      */
@@ -43,6 +48,15 @@ class ApiFacade extends BaseApi
     }
 
     /**
+     * Sets the options for resource deleting operation.
+     * @param array $options
+     */
+    public function setDeleteOptions(array $options)
+    {
+        $this->deleteOptions = $options;
+    }
+
+    /**
      * @param $path
      * @param array $options
      *
@@ -63,14 +77,21 @@ class ApiFacade extends BaseApi
         return $response;
     }
 
-    public function deleteResources($paths, $options = [])
+    /**
+     * @param array $paths
+     * @param array $options
+     *
+     * @return BaseApi\Response
+     */
+    public function deleteResources(array $paths, array $options = [])
     {
         $map = [];
 
         foreach ($paths as $path) {
             $map[$this->converter->pathToId($path)] = $path;
         }
-        $response = parent::delete_resources(array_keys($map), $options);
+
+        $response = parent::delete_resources(array_keys($map), array_merge($this->deleteOptions, $options));
 
         $deleted = [];
 
