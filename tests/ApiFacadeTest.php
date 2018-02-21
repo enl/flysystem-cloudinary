@@ -57,4 +57,5 @@ class ApiFacadeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('preset', \Cloudinary::config_get('upload_preset'));
     }
+
 }
