@@ -1,13 +1,7 @@
 <?php
 
-
 namespace Enl\Flysystem\Cloudinary\Plugin;
 
-/**
- * Class GetVersionedUrl
- *
- * @package Enl\Flysystem\Cloudinary\Plugin
- */
 class GetVersionedUrl extends AbstractPlugin
 {
     const VERSION_OPTION = 'version';
