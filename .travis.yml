@@ -22,13 +22,17 @@ matrix:
   allow_failures:
     - php: hhvm
 
+env:
+  - COMPOSER_OPTS=""
+  - COMPOSER_OPTS="--prefer-lowest"
+
 before_install:
   - if [[ $EXECUTE_COVERAGE != 'true' ]]; then phpenv config-rm xdebug.ini || return 0 ; fi
   - composer self-update
   - if [[ $EXECUTE_COVERAGE == 'true' ]]; then composer require --no-update php-coveralls/php-coveralls ; fi
 
 install:
-  - travis_retry composer install --no-interaction --prefer-source
+  - travis_retry composer update --no-interaction --prefer-source
 
 script:
   - if [[ $EXECUTE_COVERAGE == 'true' ]]; then ./vendor/bin/phpunit --coverage-clover clover.xml ; fi
