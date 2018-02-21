@@ -5,9 +5,8 @@ namespace Enl\Flysystem\Cloudinary\Test\Plugin;
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 use Enl\Flysystem\Cloudinary\Plugin\GetVersionedUrl;
 use League\Flysystem\Filesystem;
-use PHPUnit\Framework\TestCase;
 
-class GetVersionedUrlTest extends TestCase
+class GetVersionedUrlTest extends \PHPUnit_Framework_TestCase
 {
     public function testPassesVersionToUrl()
     {

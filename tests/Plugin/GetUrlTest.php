@@ -5,9 +5,8 @@ namespace Enl\Flysystem\Cloudinary\Test\Plugin;
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 use Enl\Flysystem\Cloudinary\Plugin\GetUrl;
 use League\Flysystem\Filesystem;
-use PHPUnit\Framework\TestCase;
 
-class GetUrlTest extends TestCase
+class GetUrlTest extends \PHPUnit_Framework_TestCase
 {
     public function testPassesTransformationToUrl()
     {

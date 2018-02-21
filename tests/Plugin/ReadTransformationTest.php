@@ -5,9 +5,8 @@ namespace Enl\Flysystem\Cloudinary\Test\Plugin;
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 use Enl\Flysystem\Cloudinary\Plugin\ReadTransformation;
 use League\Flysystem\Filesystem;
-use PHPUnit\Framework\TestCase;
 
-class ReadTransformationTest extends TestCase
+class ReadTransformationTest extends \PHPUnit_Framework_TestCase
 {
     public function testCallsReadIfNoTransformations()
     {

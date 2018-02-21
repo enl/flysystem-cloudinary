@@ -4,9 +4,8 @@ namespace Enl\Flysystem\Cloudinary\Test\Converter;
 
 use Enl\Flysystem\Cloudinary\Converter\PathConverterInterface;
 use Enl\Flysystem\Cloudinary\Converter\TruncateExtensionConverter;
-use PHPUnit\Framework\TestCase;
 
-class TruncateExtensionConverterTest extends TestCase
+class TruncateExtensionConverterTest extends \PHPUnit_Framework_TestCase
 {
     /** @var PathConverterInterface */
     private $converter;
