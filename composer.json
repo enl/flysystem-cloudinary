@@ -11,7 +11,7 @@
   "require": {
     "php": ">=5.4.0",
     "ext-fileinfo": "*",
-    "league/flysystem": "~1.0",
+    "league/flysystem": "^1.0.26",
     "cloudinary/cloudinary_php": "^1.8.0"
   },
   "require-dev": {
