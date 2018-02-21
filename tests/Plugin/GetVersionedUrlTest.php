@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Enl\Flysystem\Cloudinary\Test\Plugin;
-
 
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 use Enl\Flysystem\Cloudinary\Plugin\GetVersionedUrl;
