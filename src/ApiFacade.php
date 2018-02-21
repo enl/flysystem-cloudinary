@@ -20,7 +20,7 @@ class ApiFacade extends BaseApi
     /**
      * @var array
      */
-    private $deletingOptions = [];
+    private $deleteOptions = [];
 
     /**
      * @param array $options
@@ -51,9 +51,9 @@ class ApiFacade extends BaseApi
      * Sets the options for resource deleting operation.
      * @param array $options
      */
-    public function setDeletingOptions(array $options)
+    public function setDeleteOptions(array $options)
     {
-        $this->deletingOptions = $options;
+        $this->deleteOptions = $options;
     }
 
     /**
@@ -91,7 +91,7 @@ class ApiFacade extends BaseApi
             $map[$this->converter->pathToId($path)] = $path;
         }
 
-        $response = parent::delete_resources(array_keys($map), array_merge($options, $this->deletingOptions));
+        $response = parent::delete_resources(array_keys($map), array_merge($this->deleteOptions, $options));
 
         $deleted = [];
 
