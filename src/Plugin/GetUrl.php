@@ -14,8 +14,8 @@ class GetUrl extends AbstractPlugin
         return 'getUrl';
     }
 
-    public function handle($path, $transformations = [])
+    public function handle($path, $options = [])
     {
-        return $this->apiFacade->url($path, $transformations);
+        return $this->apiFacade->url($path, $options);
     }
 }

@@ -126,24 +126,26 @@ class ApiFacade extends BaseApi
      * Returns content of file with given public id.
      *
      * @param string $path
-     * @param array $transformations
+     * @param array $options
+     *
      * @return resource
      */
-    public function content($path, array $transformations = [])
+    public function content($path, array $options = [])
     {
-        return fopen($this->url($path, $transformations), 'r');
+        return fopen($this->url($path, $options), 'r');
     }
 
     /**
      * Returns URL of file with given public id and transformations.
      *
      * @param string $path
-     * @param array  $transformations
+     * @param array  $options
+     *
      * @return string
      */
-    public function url($path, array $transformations = [])
+    public function url($path, array $options = [])
     {
-        return cloudinary_url($this->converter->pathToId($path), $transformations);
+        return cloudinary_url($this->converter->pathToId($path), $options);
     }
 
     /**
