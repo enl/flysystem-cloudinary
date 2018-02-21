@@ -3,7 +3,11 @@
 
 namespace Enl\Flysystem\Cloudinary\Plugin;
 
-
+/**
+ * Class GetVersionedUrl
+ *
+ * @package Enl\Flysystem\Cloudinary\Plugin
+ */
 class GetVersionedUrl extends AbstractPlugin
 {
     const VERSION_OPTION = 'version';
@@ -21,6 +25,8 @@ class GetVersionedUrl extends AbstractPlugin
     /**
      * Returns url with version.
      * If no version was passed to $options, than the latest version will be used.
+     * Note that getting latest version is one more api call. Make sure you won't exceed
+     * api calls limit of your cloudinary plan.
      *
      * @param string $path
      * @param array $options
