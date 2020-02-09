@@ -235,7 +235,7 @@ class CloudinaryAdapter implements AdapterInterface
         foreach ($response['resources'] as $resource) {
             $storage['files'][] = $this->normalizeMetadata($resource);
         }
-        if (array_key_exists('next_cursor', $response)) {
+        if (property_exists($response, 'next_cursor')) {
             $storage['next_cursor'] = $response['next_cursor'];
 
             return $this->doListContents($directory, $storage);
