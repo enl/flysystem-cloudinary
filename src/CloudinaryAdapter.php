@@ -301,9 +301,9 @@ class CloudinaryAdapter implements AdapterInterface
         return !$resource instanceof \ArrayObject && !is_array($resource) ? false : [
             'type' => 'file',
             'path' => $resource['path'],
-            'size' => array_key_exists('bytes', $resource) ? $resource['bytes'] : false,
-            'timestamp' => array_key_exists('created_at', $resource) ? strtotime($resource['created_at']) : false,
-            'version' => array_key_exists('version', $resource) ? $resource['version'] : 1,
+            'size' => isset($resource['bytes']) ? $resource['bytes'] : false,
+            'timestamp' => isset($resource['created_at']) ? strtotime($resource['created_at']) : false,
+            'version' => isset($resource['version']) ? $resource['version'] : 1,
         ];
     }
 }
