@@ -2,6 +2,7 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
+use Enl\Flysystem\Cloudinary\ApiFacade;
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 
 abstract class ActionTestCase extends \PHPUnit_Framework_TestCase
@@ -11,7 +12,7 @@ abstract class ActionTestCase extends \PHPUnit_Framework_TestCase
      */
     final protected function buildAdapter()
     {
-        $api = $this->prophesize('\Enl\Flysystem\Cloudinary\ApiFacade');
+        $api = $this->prophesize(ApiFacade::class);
 
         return [new CloudinaryAdapter($api->reveal()), $api];
     }

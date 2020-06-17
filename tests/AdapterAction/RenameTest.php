@@ -2,6 +2,8 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
+use Cloudinary\Error;
+
 /**
  * Class RenameTest
  * @package Enl\Flysystem\Cloudinary\Test\AdapterAction
@@ -12,7 +14,7 @@ class RenameTest extends ActionTestCase
     public function testReturnsFalseOnFailure()
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->rename('old', 'new')->willThrow('Cloudinary\Error');
+        $api->rename('old', 'new')->willThrow(Error::class);
         $this->assertFalse($cloudinary->rename('old', 'new'));
     }
 

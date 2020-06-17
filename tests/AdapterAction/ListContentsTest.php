@@ -2,6 +2,7 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
+use Cloudinary\Error;
 use Prophecy\Argument;
 
 class ListContentsTest extends ActionTestCase
@@ -9,7 +10,7 @@ class ListContentsTest extends ActionTestCase
     public function testReturnsEmptyArrayOnError()
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->resources(Argument::any())->shouldBeCalled()->willThrow('Cloudinary\Error');
+        $api->resources(Argument::any())->shouldBeCalled()->willThrow(Error::class);
         $this->assertEquals([], $cloudinary->listContents());
     }
 

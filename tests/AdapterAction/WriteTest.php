@@ -2,6 +2,7 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
+use Cloudinary\Error;
 use League\Flysystem\Config;
 
 class WriteTest extends ActionTestCase
@@ -11,9 +12,18 @@ class WriteTest extends ActionTestCase
         list($cloudinary, $api) = $this->buildAdapter();
         $api->upload('path', 'contents', false)
             ->shouldBeCalled()
-            ->willThrow('Cloudinary\Error');
+            ->willThrow(Error::class);
 
         $this->assertFalse($cloudinary->write('path', 'contents', new Config()));
+    }
+
+    public function testReturnsFalseOnFailureAndEmptyStream()
+    {
+        list($cloudinary, $api) = $this->buildAdapter();
+        $api->upload('path', '', false)
+            ->shouldBeCalled()
+            ->willThrow(Error::class);
+
         $this->assertFalse($cloudinary->writeStream('path', fopen('php://memory', 'r+'), new Config()));
     }
 

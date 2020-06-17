@@ -2,6 +2,7 @@
 
 namespace Enl\Flysystem\Cloudinary\Test\Plugin;
 
+use Enl\Flysystem\Cloudinary\ApiFacade;
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 use Enl\Flysystem\Cloudinary\Plugin\GetUrl;
 use League\Flysystem\Filesystem;
@@ -20,7 +21,7 @@ class GetUrlTest extends \PHPUnit_Framework_TestCase
 
     private function mockFacade()
     {
-        $api = $this->prophesize('\Enl\Flysystem\Cloudinary\ApiFacade');
+        $api = $this->prophesize(ApiFacade::class);
 
         $filesystem = new Filesystem(new CloudinaryAdapter($api->reveal()), ['disable_asserts' => true]);
         $filesystem->addPlugin(new GetUrl($api->reveal()));
