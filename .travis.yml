@@ -9,18 +9,14 @@ cache:
 matrix:
   fast_finish: true
   include:
-    - php: 5.4
-    - php: 5.5
-    - php: 5.6
-      env:
-        - EXECUTE_CS_CHECK=true
-        - EXECUTE_COVERAGE=true
     - php: 7.0
     - php: 7.1
     - php: 7.2
-    - php: hhvm 
-  allow_failures:
-    - php: hhvm
+      env:
+        - EXECUTE_CS_CHECK=true
+        - EXECUTE_COVERAGE=true
+    - php: 7.3
+    - php: 7.4
 
 env:
   - COMPOSER_OPTS=""
