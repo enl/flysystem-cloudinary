@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## [Unreleased]
 
+## [1.2.0] - 2020-06-17
+
+* **Changed** bump phpunit version to ^6
+* **Changed** drop PHP 5 support
+* **Fix** Deprecation errors in PHP 7.4
+
 ## [1.1.1] - 2018-02-21
 
 * **Added** `GetVersionedUrl` plugin to get URL of specific file version 
