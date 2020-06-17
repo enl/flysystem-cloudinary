@@ -54,8 +54,8 @@ class ListContentsTest extends ActionTestCase
         list ($cloudinary, $api) = $this->buildAdapter();
         $request = ['prefix' => '', 'max_results' => 500, 'type' => 'upload'];
         $response = [
-            ['public_id' => 'test-1', 'path' => 'test-1'],
-            ['public_id' => 'dir1/test-2', 'path' => 'dir1/test-2',],
+            new \ArrayObject(['public_id' => 'test-1', 'path' => 'test-1']),
+            new \ArrayObject(['public_id' => 'dir1/test-2', 'path' => 'dir1/test-2',]),
             ['public_id' => 'dir1/test-3', 'path' => 'dir1/test-3',],
             ['public_id' => 'dir2/test-4', 'path' => 'dir2/test-4',],
         ];
