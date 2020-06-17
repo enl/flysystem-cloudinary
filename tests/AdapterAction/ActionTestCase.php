@@ -4,8 +4,9 @@ namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
 use Enl\Flysystem\Cloudinary\ApiFacade;
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
+use PHPUnit\Framework\TestCase;
 
-abstract class ActionTestCase extends \PHPUnit_Framework_TestCase
+abstract class ActionTestCase extends TestCase
 {
     /**
      * @return [CloudinaryAdapter, ApiFacade]

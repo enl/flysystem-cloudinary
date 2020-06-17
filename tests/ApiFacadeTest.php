@@ -3,6 +3,7 @@
 namespace Enl\Flysystem\Cloudinary\Test;
 
 use Enl\Flysystem\Cloudinary\ApiFacade;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class ApiFacadeTest
@@ -10,7 +11,7 @@ use Enl\Flysystem\Cloudinary\ApiFacade;
  * ApiFacade delegates everything to different parts of Cloudinary API library
  * @package Enl\Flysystem\Cloudinary\Test
  */
-class ApiFacadeTest extends \PHPUnit_Framework_TestCase
+class ApiFacadeTest extends TestCase
 {
     public static function setUpBeforeClass()
     {

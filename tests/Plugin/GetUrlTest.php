@@ -6,8 +6,9 @@ use Enl\Flysystem\Cloudinary\ApiFacade;
 use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 use Enl\Flysystem\Cloudinary\Plugin\GetUrl;
 use League\Flysystem\Filesystem;
+use PHPUnit\Framework\TestCase;
 
-class GetUrlTest extends \PHPUnit_Framework_TestCase
+class GetUrlTest extends TestCase
 {
     public function testPassesTransformationToUrl()
     {

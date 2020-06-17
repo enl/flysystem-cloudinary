@@ -4,8 +4,9 @@ namespace Enl\Flysystem\Cloudinary\Test\Converter;
 
 use Enl\Flysystem\Cloudinary\Converter\AsIsPathConverter;
 use Enl\Flysystem\Cloudinary\Converter\PathConverterInterface;
+use PHPUnit\Framework\TestCase;
 
-class AsIsPathConverterTest extends \PHPUnit_Framework_TestCase
+class AsIsPathConverterTest extends TestCase
 {
     /** @var PathConverterInterface */
     private $converter;
