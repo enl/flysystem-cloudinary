@@ -29,9 +29,7 @@ class GetVersionedUrl extends AbstractPlugin
      */
     public function handle($path, $options = [])
     {
-        if (!array_key_exists(self::VERSION_OPTION, $options)) {
-            $options[self::VERSION_OPTION] = $this->getLatestVersion($path);
-        }
+        $options[self::VERSION_OPTION] = $options[self::VERSION_OPTION] ?? $this->getLatestVersion($path);
 
         return $this->apiFacade->url($path, $options);
     }
