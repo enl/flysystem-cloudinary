@@ -8,7 +8,6 @@ use League\Flysystem\Adapter\Polyfill\StreamedCopyTrait;
 use League\Flysystem\Adapter\Polyfill\StreamedTrait;
 use League\Flysystem\AdapterInterface;
 use League\Flysystem\Config;
-use League\Flysystem\Filesystem;
 
 class CloudinaryAdapter implements AdapterInterface
 {
@@ -89,10 +88,10 @@ class CloudinaryAdapter implements AdapterInterface
     public function delete($path)
     {
         try {
-            $response = $this->api->deleteResources([$path]);
+            $response = $this->api->deleteResource($path);
 
-            return $response['deleted'][$path] === 'deleted';
-        } catch (Api\Error $e) {
+            return $response['result'] === 'ok';
+        } catch (\Exception $e) {
             return false;
         }
     }

@@ -78,27 +78,14 @@ class ApiFacade extends BaseApi
     }
 
     /**
-     * @param array $paths
+     * @param $path
      * @param array $options
      *
      * @return BaseApi\Response
      */
-    public function deleteResources(array $paths, array $options = [])
+    public function deleteResource($path, array $options = [])
     {
-        $map = [];
-
-        foreach ($paths as $path) {
-            $map[$this->converter->pathToId($path)] = $path;
-        }
-
-        $response = parent::delete_resources(array_keys($map), array_merge($this->deleteOptions, $options));
-
-        $deleted = [];
-
-        foreach ($response['deleted'] as $id => $status) {
-            $deleted[$map[$id]] = $status;
-        }
-        $response['deleted'] = $deleted;
+        $response = Uploader::destroy($this->converter->pathToId($path), array_merge($this->deleteOptions, $options));
 
         return $response;
     }
