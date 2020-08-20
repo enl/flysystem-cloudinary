@@ -92,7 +92,8 @@ class ApiFacade extends BaseApi
     public function deleteResources(array $paths, array $options = [])
     {
         @trigger_error(
-            '\Enl\Flysystem\Cloudinary\ApiFacade::deleteResources() is deprecated since 1.3.0, use `deleteFile` instead. Will be removed in 2.0',
+            '\Enl\Flysystem\Cloudinary\ApiFacade::deleteResources() is deprecated'
+            . ' since 1.3.0, use `deleteFile` instead. Will be removed in 2.0',
             E_USER_DEPRECATED
         );
 
