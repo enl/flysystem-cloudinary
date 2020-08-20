@@ -9,21 +9,21 @@ class DeleteTest extends ActionTestCase
     public function testReturnsFalseOnFailure()
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->deleteResources(['file'])->willReturn(['deleted' => ['file' => 'not_found']]);
+        $api->deleteFile('file')->willReturn(['result' => 'not found']);
         $this->assertFalse($cloudinary->delete('file'));
     }
 
     public function testReturnsFalseOnException()
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->deleteResources(['file'])->willThrow(Error::class);
+        $api->deleteFile('file')->willThrow(Error::class);
         $this->assertFalse($cloudinary->delete('file'));
     }
 
     public function testReturnsTrueOnSuccess()
     {
         list($cloudinary, $api) = $this->buildAdapter();
-        $api->deleteResources(['file.jpg'])->willReturn(['deleted' => ['file.jpg' => 'deleted']]);
+        $api->deleteFile('file.jpg')->willReturn(['result' => 'ok']);
         $this->assertTrue($cloudinary->delete('file.jpg'));
     }
 
