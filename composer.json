@@ -30,5 +30,8 @@
     "files": [
       "tests/polyfill.php"
     ]
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
   }
 }
