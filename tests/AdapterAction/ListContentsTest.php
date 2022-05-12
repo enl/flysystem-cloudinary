@@ -4,6 +4,7 @@ namespace Enl\Flysystem\Cloudinary\Test\AdapterAction;
 
 use Cloudinary\Error;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ListContentsTest extends ActionTestCase
 {

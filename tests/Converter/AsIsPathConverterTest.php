@@ -11,7 +11,7 @@ class AsIsPathConverterTest extends TestCase
     /** @var PathConverterInterface */
     private $converter;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->converter = new AsIsPathConverter();
     }

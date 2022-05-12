@@ -31,8 +31,8 @@ class ReadTest extends ActionTestCase
         $api->content('file')->willReturn(fopen('php://memory', 'r+'));
         $response = $cloudinary->readStream('file');
 
-        $this->assertInternalType('array', $response);
+        $this->assertIsArray($response);
         $this->assertEquals('file', $response['path']);
-        $this->assertInternalType('resource', $response['stream']);
+        $this->assertIsResource($response['stream']);
     }
 }
