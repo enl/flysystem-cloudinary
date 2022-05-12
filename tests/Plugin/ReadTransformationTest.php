@@ -7,9 +7,12 @@ use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 use Enl\Flysystem\Cloudinary\Plugin\ReadTransformation;
 use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class ReadTransformationTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testCallsReadIfNoTransformations()
     {
         list ($filesystem, $facade) = $this->mockFacade();

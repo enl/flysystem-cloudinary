@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 
 abstract class ActionTestCase extends TestCase
 {
+    use ProphecyTrait;
+
     /**
      * @return [CloudinaryAdapter, ApiFacade]
      */

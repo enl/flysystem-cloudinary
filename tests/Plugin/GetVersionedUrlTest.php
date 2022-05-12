@@ -7,9 +7,12 @@ use Enl\Flysystem\Cloudinary\CloudinaryAdapter;
 use Enl\Flysystem\Cloudinary\Plugin\GetVersionedUrl;
 use League\Flysystem\Filesystem;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class GetVersionedUrlTest extends TestCase
 {
+    use ProphecyTrait;
+
     public function testPassesVersionToUrl()
     {
         list ($filesystem, $facade) = $this->mockFacade();
