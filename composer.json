@@ -9,10 +9,10 @@
     }
   ],
   "require": {
-    "php": ">=5.4.0|^8.0",
+    "php": "^7.4 || ^8.0",
     "ext-fileinfo": "*",
-    "league/flysystem": "^1.0.26",
-    "cloudinary/cloudinary_php": "^1.8.0"
+    "league/flysystem": "^1.0.26 || ^2.0 || ^3.0",
+    "cloudinary/cloudinary_php": "^1.8.0 || ^2.0"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^2.3.1",
