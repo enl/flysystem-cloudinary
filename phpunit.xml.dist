@@ -25,8 +25,4 @@
             <clover outputFile="clover.xml"/>
         </report>
     </coverage>
-    <logging>
-        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true" />
-        <log type="coverage-html" target="coverage" showUncoveredFiles="true" />
-    </logging>
 </phpunit>
