@@ -2,7 +2,7 @@
 
 namespace Enl\Flysystem\Cloudinary;
 
-use Cloudinary\Api as BaseApi;
+use Cloudinary\Api\Upload\UploadApi as BaseApi;
 use Cloudinary\Uploader;
 use Enl\Flysystem\Cloudinary\Converter\AsIsPathConverter;
 use Enl\Flysystem\Cloudinary\Converter\PathConverterInterface;
@@ -79,7 +79,7 @@ class ApiFacade extends BaseApi
 
     public function deleteFile($path, array $options = [])
     {
-        return Uploader::destroy($this->converter->pathToId($path), $options);
+        return $this->destroy($this->converter->pathToId($path), $options);
     }
 
     /**
